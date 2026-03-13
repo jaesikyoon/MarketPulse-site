@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketPulse - 브리핑 아카이브</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            color: #1a1a2e;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        h1 { font-size: 1.5rem; color: #16213e; margin-bottom: 8px; }
+        .subtitle { color: #6c757d; margin-bottom: 30px; }
+        .audio-section {
+            background: #e8f4f8;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 30px;
+        }
+        .audio-section audio { width: 100%; margin-top: 8px; }
+        .audio-section h3 { font-size: 0.95rem; margin-bottom: 4px; }
+        .entry-list { list-style: none; }
+        .entry-list li {
+            border-bottom: 1px solid #f1f3f5;
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .entry-list a {
+            color: #16213e;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .entry-list a:hover { color: #4361ee; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-us { background: #dbeafe; color: #1e40af; }
+        .badge-kr { background: #fef3c7; color: #92400e; }
+        .empty { color: #adb5bd; text-align: center; padding: 40px 0; }
+        footer {
+            margin-top: 30px;
+            color: #adb5bd;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MarketPulse 브리핑 아카이브</h1>
+        <p class="subtitle">LLM 기반 주식 시장 자동 분석 브리핑</p>
+
+        
+        <div class="audio-section">
+            
+            <h3>최신 미국 시장 음성 브리핑</h3>
+            <audio controls preload="none">
+                <source src="latest-us-audio.mp3" type="audio/mpeg">
+            </audio>
+            
+            
+            <h3>최신 한국 시장 음성 브리핑</h3>
+            <audio controls preload="none">
+                <source src="latest-kr-audio.mp3" type="audio/mpeg">
+            </audio>
+            
+        </div>
+        
+
+        <div style="background: #e6fcf5; border-radius: 8px; padding: 16px; margin-bottom: 16px; border: 1px solid #96f2d7;">
+            <a href="news/index.html" style="color: #087f5b; text-decoration: none; font-weight: 600; font-size: 1rem;">
+                종목 뉴스 대시보드 &rarr;
+            </a>
+            <p style="color: #495057; font-size: 0.85rem; margin-top: 4px;">관심 종목 20개의 뉴스 감성 분석</p>
+        </div>
+        <div style="background: #e8f4f8; border-radius: 8px; padding: 16px; margin-bottom: 30px; border: 1px solid #a5d8ff;">
+            <a href="news/explore.html" style="color: #1971c2; text-decoration: none; font-weight: 600; font-size: 1rem;">
+                뉴스 탐색 &rarr;
+            </a>
+            <p style="color: #495057; font-size: 0.85rem; margin-top: 4px;">종목별, 기간별 뉴스 동적 검색</p>
+        </div>
+
+        
+        <ul class="entry-list">
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/13/kr/index.html">2026-03-13 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/13/us/index.html">2026-03-13 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/12/kr/index.html">2026-03-12 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/12/us/index.html">2026-03-12 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/11/kr/index.html">2026-03-11 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/11/us/index.html">2026-03-11 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/10/kr/index.html">2026-03-10 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/10/us/index.html">2026-03-10 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/09/kr/index.html">2026-03-09 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/09/us/index.html">2026-03-09 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/07/us/index.html">2026-03-07 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/06/kr/index.html">2026-03-06 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/06/us/index.html">2026-03-06 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/05/kr/index.html">2026-03-05 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/05/us/index.html">2026-03-05 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/04/kr/index.html">2026-03-04 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/04/us/index.html">2026-03-04 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/03/kr/index.html">2026-03-03 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/03/us/index.html">2026-03-03 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/03/02/kr/index.html">2026-03-02 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/03/02/us/index.html">2026-03-02 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/28/kr/index.html">2026-02-28 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/28/us/index.html">2026-02-28 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/27/us/index.html">2026-02-27 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/26/kr/index.html">2026-02-26 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/26/us/index.html">2026-02-26 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/25/kr/index.html">2026-02-25 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/25/us/index.html">2026-02-25 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/24/kr/index.html">2026-02-24 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/24/us/index.html">2026-02-24 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/23/kr/index.html">2026-02-23 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/23/us/index.html">2026-02-23 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/21/kr/index.html">2026-02-21 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/21/us/index.html">2026-02-21 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/20/kr/index.html">2026-02-20 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/20/us/index.html">2026-02-20 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/19/kr/index.html">2026-02-19 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/19/us/index.html">2026-02-19 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/18/kr/index.html">2026-02-18 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/18/us/index.html">2026-02-18 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-kr">한국 시장</span>
+                <a href="2026/02/17/kr/index.html">2026-02-17 브리핑</a>
+            </li>
+            
+            <li>
+                <span class="badge badge-us">미국 시장</span>
+                <a href="2026/02/17/us/index.html">2026-02-17 브리핑</a>
+            </li>
+            
+        </ul>
+        
+
+        <footer>
+            Powered by Gemini &amp; Google Cloud TTS
+        </footer>
+    </div>
+</body>
+</html>
