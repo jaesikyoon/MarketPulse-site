@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketPulse - 뉴스 탐색</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            color: #1a1a2e;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        header {
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+        h1 { font-size: 1.5rem; color: #16213e; }
+        .meta { color: #6c757d; font-size: 0.9rem; margin-top: 4px; }
+        h2 {
+            font-size: 1.2rem;
+            color: #16213e;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        /* === 모드 탭 === */
+        .mode-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .mode-tab {
+            padding: 10px 24px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #6c757d;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: color 0.15s, border-color 0.15s;
+        }
+        .mode-tab:hover { color: #16213e; }
+        .mode-tab.active {
+            color: #1971c2;
+            font-weight: 700;
+            border-bottom-color: #1971c2;
+        }
+        .mode-panel { display: none; }
+        .mode-panel.active { display: block; }
+
+        /* === 필터 섹션 === */
+        .filter-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .filter-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #495057;
+        }
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            background: #fff;
+        }
+        .filter-actions {
+            margin-top: 14px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.15s;
+        }
+        .btn:hover { opacity: 0.85; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-primary { background: #1971c2; color: #fff; }
+        .btn-secondary { background: #e9ecef; color: #495057; }
+
+        /* === 결과 헤더 === */
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        .result-count { font-weight: 600; }
+
+        /* === 종목별 감성 요약 테이블 === */
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        .stock-table th, .stock-table td {
+            border: 1px solid #dee2e6;
+            padding: 8px 10px;
+            text-align: left;
+        }
+        .stock-table th {
+            background: #f1f3f5;
+            font-weight: 600;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        .stock-table td.num { text-align: center; }
+
+        /* === 배지 === */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .badge-positive { background: #d3f9d8; color: #2b8a3e; }
+        .badge-negative { background: #ffe3e3; color: #c92a2a; }
+        .badge-neutral { background: #e9ecef; color: #495057; }
+        .badge-impact { background: #fff3bf; color: #e67700; }
+        .badge-category { background: #e8f4f8; color: #1971c2; }
+        .badge-market-kr { background: #fef3c7; color: #92400e; }
+        .badge-market-us { background: #dbeafe; color: #1e40af; }
+
+        .score-positive { color: #37b24d; font-weight: 700; }
+        .score-negative { color: #e03131; font-weight: 700; }
+        .score-neutral { color: #868e96; font-weight: 700; }
+
+        /* === 뉴스 카드 === */
+        .news-item {
+            border-left: 3px solid #e9ecef;
+            padding: 10px 16px;
+            margin-bottom: 10px;
+            background: #fafbfc;
+            border-radius: 0 6px 6px 0;
+        }
+        .news-item.sentiment-positive { border-left-color: #37b24d; }
+        .news-item.sentiment-negative { border-left-color: #e03131; }
+        .news-item.sentiment-neutral { border-left-color: #868e96; }
+        .news-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+        .news-headline {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #16213e;
+            margin-bottom: 4px;
+        }
+        .news-summary {
+            font-size: 0.85rem;
+            color: #495057;
+            margin-bottom: 4px;
+        }
+        .news-reason {
+            font-size: 0.82rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+        .news-source {
+            font-size: 0.78rem;
+            color: #adb5bd;
+            margin-top: 4px;
+        }
+        .news-source a { color: #868e96; }
+        .news-source a:hover { color: #495057; }
+
+        /* === 페이지네이션 === */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            font-size: 0.88rem;
+        }
+        .pagination button {
+            padding: 6px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .pagination button:hover:not(:disabled) { background: #f1f3f5; }
+        .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+        .page-info { color: #6c757d; }
+
+        /* === 로딩 / 빈 상태 === */
+        .loading {
+            text-align: center;
+            color: #6c757d;
+            padding: 40px;
+            font-size: 0.9rem;
+        }
+        .empty-state {
+            text-align: center;
+            color: #adb5bd;
+            padding: 40px;
+            font-size: 0.9rem;
+        }
+
+        /* === Footer === */
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.85rem;
+        }
+        footer a { color: #6c757d; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* === 반응형 === */
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            .filter-grid { grid-template-columns: 1fr; }
+            .mode-tab { padding: 10px 16px; font-size: 0.88rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>뉴스 탐색</h1>
+            <div class="meta">종목별, 기간별로 뉴스를 검색합니다.</div>
+        </header>
+
+        <!-- 모드 탭 -->
+        <div class="mode-tabs">
+            <div class="mode-tab active" data-mode="all" onclick="switchMode('all')">전체 뉴스 (24시간)</div>
+            <div class="mode-tab" data-mode="filter" onclick="switchMode('filter')">필터 검색</div>
+        </div>
+
+        <!-- ========== 모드 1: 전체 뉴스 ========== -->
+        <div id="panel-all" class="mode-panel active">
+            <div id="all-result-header" class="result-header">
+                <span class="result-count" id="all-count">불러오는 중...</span>
+            </div>
+
+            <!-- 종목별 감성 요약 -->
+            <div id="all-summary-section" style="display:none;">
+                <h2>종목별 감성 요약</h2>
+                <div style="overflow-x: auto;">
+                    <table class="stock-table" id="all-summary-table">
+                        <thead>
+                            <tr>
+                                <th>종목</th>
+                                <th>시장</th>
+                                <th>뉴스</th>
+                                <th>긍정</th>
+                                <th>부정</th>
+                                <th>중립</th>
+                                <th>감성점수</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 뉴스 타임라인 -->
+            <h2 id="all-timeline-title" style="display:none;">뉴스 타임라인</h2>
+            <div id="all-news-list"></div>
+            <div id="all-pagination" class="pagination" style="display:none;">
+                <button onclick="allPrevPage()" id="all-prev-btn" disabled>&larr; 이전</button>
+                <span class="page-info" id="all-page-info"></span>
+                <button onclick="allNextPage()" id="all-next-btn" disabled>다음 &rarr;</button>
+            </div>
+        </div>
+
+        <!-- ========== 모드 2: 필터 검색 ========== -->
+        <div id="panel-filter" class="mode-panel">
+            <div class="filter-section">
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label>뉴스 유형</label>
+                        <select id="f-news-type" onchange="onNewsTypeChange()">
+                            <option value="stock">종목 뉴스</option>
+                            <option value="topic">주제 뉴스</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" id="fg-ticker">
+                        <label>종목</label>
+                        <select id="f-ticker">
+                            <option value="">전체 종목</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" id="fg-topic" style="display:none;">
+                        <label>주제</label>
+                        <select id="f-topic">
+                            <option value="">전체 주제</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>시작일</label>
+                        <input type="date" id="f-date-start">
+                    </div>
+                    <div class="filter-group">
+                        <label>종료일</label>
+                        <input type="date" id="f-date-end">
+                    </div>
+                    <div class="filter-group">
+                        <label>시장</label>
+                        <select id="f-market">
+                            <option value="">전체</option>
+                            <option value="KR">KR (한국)</option>
+                            <option value="US">US (미국)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>감성</label>
+                        <select id="f-sentiment">
+                            <option value="">전체</option>
+                            <option value="positive">긍정</option>
+                            <option value="negative">부정</option>
+                            <option value="neutral">중립</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>영향도</label>
+                        <select id="f-impact">
+                            <option value="">전체</option>
+                            <option value="3">3+</option>
+                            <option value="4">4+</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="filterSearch(true)">검색</button>
+                    <button class="btn btn-secondary" onclick="filterReset()">초기화</button>
+                </div>
+            </div>
+
+            <div id="filter-result-header" class="result-header" style="display:none;">
+                <span class="result-count" id="filter-count"></span>
+            </div>
+
+            <!-- 감성 요약 (필터 결과) -->
+            <div id="filter-summary-section" style="display:none;">
+                <h2 id="filter-summary-title">종목별 감성 요약</h2>
+                <div style="overflow-x: auto;">
+                    <table class="stock-table" id="filter-summary-table">
+                        <thead id="filter-summary-thead">
+                            <tr>
+                                <th>종목</th>
+                                <th>시장</th>
+                                <th>뉴스</th>
+                                <th>긍정</th>
+                                <th>부정</th>
+                                <th>중립</th>
+                                <th>감성점수</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h2 id="filter-timeline-title" style="display:none;">뉴스 타임라인</h2>
+            <div id="filter-news-list"></div>
+            <div id="filter-pagination" class="pagination" style="display:none;">
+                <button onclick="filterPrevPage()" id="filter-prev-btn" disabled>&larr; 이전</button>
+                <span class="page-info" id="filter-page-info"></span>
+                <button onclick="filterNextPage()" id="filter-next-btn" disabled>다음 &rarr;</button>
+            </div>
+        </div>
+
+        <footer>
+            <a href="index.html">뉴스 대시보드</a> |
+            <a href="watchlist.html">관심 종목 편집</a> |
+            <a href="/MarketPulse-site/">브리핑 아카이브</a>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script>
+        // =====================================================================
+        // Supabase 초기화
+        // =====================================================================
+        const SUPABASE_URL = 'https://llriovzjiiravxeufsbu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_AVzf5BzPmI9NLj-cBKUzFQ_qu8K8xpr';
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const PAGE_SIZE = 100;
+        const SENTIMENT_LABELS = { positive: '긍정', negative: '부정', neutral: '중립' };
+        const CATEGORY_LABELS = {
+            earnings: '실적', regulation: '규제', product: '제품',
+            macro: '매크로', management: '경영', market: '시장', other: '기타'
+        };
+
+        // =====================================================================
+        // 모드 전환
+        // =====================================================================
+        function switchMode(mode) {
+            document.querySelectorAll('.mode-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.mode === mode);
+            });
+            document.querySelectorAll('.mode-panel').forEach(p => {
+                p.classList.toggle('active', p.id === 'panel-' + mode);
+            });
+        }
+
+        // =====================================================================
+        // 공통 유틸리티
+        // =====================================================================
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function sentimentBadge(s) {
+            return '<span class="badge badge-' + (s || 'neutral') + '">' +
+                (SENTIMENT_LABELS[s] || '중립') + '</span>';
+        }
+
+        function marketBadge(market) {
+            return '<span class="badge badge-market-' + (market || 'kr').toLowerCase() + '">' +
+                escapeHtml(market || '') + '</span>';
+        }
+
+        function scoreClass(score) {
+            if (score > 0) return 'score-positive';
+            if (score < 0) return 'score-negative';
+            return 'score-neutral';
+        }
+
+        function scoreDisplay(score) {
+            return (score > 0 ? '+' : '') + score.toFixed(1);
+        }
+
+        const TOPIC_CAT_LABELS = {
+            policy: '정책', technology: '기술', regulation: '규제',
+            trade: '무역', investment: '투자', geopolitics: '지정학', other: '기타'
+        };
+
+        function renderNewsCard(item) {
+            const s = item.sentiment || 'neutral';
+            const isTopic = !!item.topic_id;
+            const catLabel = isTopic
+                ? (TOPIC_CAT_LABELS[item.news_category] || '기타')
+                : (CATEGORY_LABELS[item.news_category] || '기타');
+            let html = '<div class="news-item sentiment-' + s + '">';
+            html += '<div class="news-badges">';
+            html += sentimentBadge(s);
+            html += '<span class="badge badge-impact">영향도 ' + (item.impact_score || 0) + '/5</span>';
+            if (item.news_category) html += '<span class="badge badge-category">' + catLabel + '</span>';
+            if (isTopic) {
+                html += '<span class="badge" style="background:#f3e8ff;color:#7c3aed;">' +
+                    escapeHtml(item.topic_name || item.topic_id) + '</span>';
+            } else {
+                html += '<span class="badge badge-market-' + (item.market || 'kr').toLowerCase() + '">' +
+                    escapeHtml(item.ticker_name || item.ticker) + '</span>';
+            }
+            html += '</div>';
+            html += '<div class="news-headline">' + escapeHtml(item.headline) + '</div>';
+            if (item.summary) html += '<div class="news-summary">' + escapeHtml(item.summary) + '</div>';
+            if (item.sentiment_reason) html += '<div class="news-reason">' + escapeHtml(item.sentiment_reason) + '</div>';
+            if (item.source_url) {
+                html += '<div class="news-source"><a href="' + escapeHtml(item.source_url) +
+                    '" target="_blank" rel="noopener">' + escapeHtml(item.source_name || '원문 보기') + '</a></div>';
+            } else if (item.source_name) {
+                html += '<div class="news-source">' + escapeHtml(item.source_name) + '</div>';
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function renderSummaryTable(tableId, newsItems, newsType) {
+            const isTopic = newsType === 'topic';
+            const groups = {};
+            for (const item of newsItems) {
+                const key = isTopic ? (item.topic_id || '') : (item.ticker || '');
+                if (!groups[key]) {
+                    groups[key] = {
+                        name: isTopic
+                            ? (item.topic_name || item.topic_id || '')
+                            : (item.ticker_name || item.ticker || ''),
+                        sub: isTopic
+                            ? (item.topic_category || '')
+                            : (item.market || ''),
+                        total: 0, pos: 0, neg: 0, neu: 0
+                    };
+                }
+                groups[key].total++;
+                if (item.sentiment === 'positive') groups[key].pos++;
+                else if (item.sentiment === 'negative') groups[key].neg++;
+                else groups[key].neu++;
+            }
+
+            const tbody = document.querySelector('#' + tableId + ' tbody');
+            tbody.innerHTML = '';
+            const sorted = Object.values(groups).sort((a, b) => b.total - a.total);
+            for (const s of sorted) {
+                const score = s.total > 0 ? (s.pos - s.neg) / s.total * 100 : 0;
+                const subBadge = isTopic
+                    ? '<span class="badge badge-category">' + escapeHtml(TOPIC_CAT_LABELS[s.sub] || s.sub) + '</span>'
+                    : marketBadge(s.sub);
+                tbody.innerHTML += '<tr>' +
+                    '<td><strong>' + escapeHtml(s.name) + '</strong></td>' +
+                    '<td class="num">' + subBadge + '</td>' +
+                    '<td class="num">' + s.total + '</td>' +
+                    '<td class="num">' + s.pos + '</td>' +
+                    '<td class="num">' + s.neg + '</td>' +
+                    '<td class="num">' + s.neu + '</td>' +
+                    '<td class="num"><span class="' + scoreClass(score) + '">' +
+                    scoreDisplay(score) + '</span></td></tr>';
+            }
+        }
+
+        function renderPagination(prefix, offset, total) {
+            const pag = document.getElementById(prefix + '-pagination');
+            const info = document.getElementById(prefix + '-page-info');
+            const prevBtn = document.getElementById(prefix + '-prev-btn');
+            const nextBtn = document.getElementById(prefix + '-next-btn');
+
+            if (total === 0) {
+                pag.style.display = 'none';
+                return;
+            }
+            pag.style.display = 'flex';
+            const from = offset + 1;
+            const to = Math.min(offset + PAGE_SIZE, total);
+            info.textContent = from + '-' + to + ' / ' + total + '건';
+            prevBtn.disabled = offset === 0;
+            nextBtn.disabled = offset + PAGE_SIZE >= total;
+        }
+
+        // =====================================================================
+        // 모드 1: 전체 뉴스 (최근 24시간)
+        // =====================================================================
+        let allOffset = 0;
+        let allTotal = 0;
+        let allNewsCached = []; // 감성 요약용 전체 캐시 (최대 500건)
+
+        async function loadAllNews() {
+            const container = document.getElementById('all-news-list');
+            container.innerHTML = '<div class="loading">뉴스를 불러오는 중...</div>';
+
+            try {
+                const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+                const { data, error, count } = await sb
+                    .from('stock_news')
+                    .select('id, ticker, ticker_name, market, sector, headline, summary, source_url, source_name, sentiment, impact_score, news_category, sentiment_reason, collected_at, news_date, collection_batch', { count: 'exact' })
+                    .gte('collected_at', since)
+                    .order('collected_at', { ascending: false })
+                    .range(allOffset, allOffset + PAGE_SIZE - 1);
+
+                if (error) throw error;
+                allTotal = count || 0;
+
+                document.getElementById('all-count').textContent = '최근 24시간: ' + allTotal + '건';
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="empty-state">최근 24시간 뉴스가 없습니다.</div>';
+                    document.getElementById('all-summary-section').style.display = 'none';
+                    document.getElementById('all-timeline-title').style.display = 'none';
+                    document.getElementById('all-pagination').style.display = 'none';
+                    return;
+                }
+
+                // 첫 페이지에서 감성 요약 테이블 생성 (최대 500건 기준)
+                if (allOffset === 0) {
+                    // 감성 요약용: 전체 조회 (500건 제한)
+                    const { data: allData } = await sb
+                        .from('stock_news')
+                        .select('ticker, ticker_name, market, sentiment', { count: 'exact' })
+                        .gte('collected_at', since)
+                        .order('collected_at', { ascending: false })
+                        .limit(500);
+                    allNewsCached = allData || [];
+                    renderSummaryTable('all-summary-table', allNewsCached, 'stock');
+                    document.getElementById('all-summary-section').style.display = 'block';
+                }
+
+                // 뉴스 카드 렌더링
+                document.getElementById('all-timeline-title').style.display = 'block';
+                container.innerHTML = data.map(renderNewsCard).join('');
+
+                renderPagination('all', allOffset, allTotal);
+            } catch (e) {
+                container.innerHTML = '<div class="loading" style="color:#c92a2a;">로드 실패: ' + e.message + '</div>';
+            }
+        }
+
+        function allPrevPage() {
+            allOffset = Math.max(0, allOffset - PAGE_SIZE);
+            loadAllNews();
+        }
+        function allNextPage() {
+            allOffset += PAGE_SIZE;
+            loadAllNews();
+        }
+
+        // =====================================================================
+        // 모드 2: 필터 검색
+        // =====================================================================
+        let filterOffset = 0;
+        let filterTotal = 0;
+
+        async function loadTickers() {
+            try {
+                const { data, error } = await sb
+                    .from('watchlist')
+                    .select('ticker, ticker_name, market')
+                    .eq('is_active', true)
+                    .order('market', { ascending: true })
+                    .order('ticker_name', { ascending: true });
+
+                if (error) throw error;
+
+                const sel = document.getElementById('f-ticker');
+                for (const item of (data || [])) {
+                    const opt = document.createElement('option');
+                    opt.value = item.ticker;
+                    opt.textContent = '[' + item.market + '] ' + item.ticker_name + ' (' + item.ticker + ')';
+                    sel.appendChild(opt);
+                }
+            } catch (e) {
+                console.warn('종목 목록 로드 실패:', e.message);
+            }
+        }
+
+        async function loadTopics() {
+            try {
+                const { data, error } = await sb
+                    .from('topic_watchlist')
+                    .select('topic_id, topic_name, topic_category')
+                    .eq('is_active', true)
+                    .order('sort_order', { ascending: true });
+                if (error) throw error;
+                const sel = document.getElementById('f-topic');
+                for (const item of (data || [])) {
+                    const opt = document.createElement('option');
+                    opt.value = item.topic_id;
+                    opt.textContent = item.topic_name + ' (' + item.topic_id + ')';
+                    sel.appendChild(opt);
+                }
+            } catch (e) {
+                console.warn('주제 목록 로드 실패:', e.message);
+            }
+        }
+
+        function onNewsTypeChange() {
+            const type = document.getElementById('f-news-type').value;
+            document.getElementById('fg-ticker').style.display = type === 'stock' ? '' : 'none';
+            document.getElementById('fg-topic').style.display = type === 'topic' ? '' : 'none';
+            // 시장 필터는 종목 뉴스에서만 의미
+            const marketFilter = document.getElementById('f-market');
+            if (marketFilter) marketFilter.closest('.filter-group').style.display = type === 'stock' ? '' : 'none';
+        }
+
+        function setDefaultDates() {
+            const today = new Date();
+            const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            document.getElementById('f-date-end').value = today.toISOString().split('T')[0];
+            document.getElementById('f-date-start').value = weekAgo.toISOString().split('T')[0];
+        }
+
+        async function filterSearch(resetOffset) {
+            if (resetOffset) filterOffset = 0;
+
+            const newsType = document.getElementById('f-news-type').value;
+            const ticker = document.getElementById('f-ticker').value;
+            const topicId = document.getElementById('f-topic').value;
+            const dateStart = document.getElementById('f-date-start').value;
+            const dateEnd = document.getElementById('f-date-end').value;
+            const market = document.getElementById('f-market').value;
+            const sentiment = document.getElementById('f-sentiment').value;
+            const impact = document.getElementById('f-impact').value;
+
+            const container = document.getElementById('filter-news-list');
+            container.innerHTML = '<div class="loading">검색 중...</div>';
+
+            try {
+                const tableName = newsType === 'topic' ? 'topic_news' : 'stock_news';
+                const selectCols = newsType === 'topic'
+                    ? 'id, topic_id, topic_name, topic_category, headline, summary, source_url, source_name, sentiment, impact_score, news_category, sentiment_reason, collected_at, news_date, collection_batch'
+                    : 'id, ticker, ticker_name, market, sector, headline, summary, source_url, source_name, sentiment, impact_score, news_category, sentiment_reason, collected_at, news_date, collection_batch';
+
+                // 뉴스 조회
+                let query = sb
+                    .from(tableName)
+                    .select(selectCols, { count: 'exact' })
+                    .order('collected_at', { ascending: false });
+
+                if (newsType === 'stock') {
+                    if (ticker) query = query.eq('ticker', ticker);
+                    if (market) query = query.eq('market', market);
+                } else {
+                    if (topicId) query = query.eq('topic_id', topicId);
+                }
+                if (sentiment) query = query.eq('sentiment', sentiment);
+                if (impact) query = query.gte('impact_score', parseInt(impact));
+                if (dateStart) query = query.gte('collected_at', dateStart + 'T00:00:00+09:00');
+                if (dateEnd) query = query.lte('collected_at', dateEnd + 'T23:59:59+09:00');
+
+                query = query.range(filterOffset, filterOffset + PAGE_SIZE - 1);
+
+                const { data, error, count } = await query;
+                if (error) throw error;
+                filterTotal = count || 0;
+
+                document.getElementById('filter-result-header').style.display = 'flex';
+                document.getElementById('filter-count').textContent = '검색 결과: ' + filterTotal + '건';
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="empty-state">검색 결과가 없습니다.</div>';
+                    document.getElementById('filter-summary-section').style.display = 'none';
+                    document.getElementById('filter-timeline-title').style.display = 'none';
+                    document.getElementById('filter-pagination').style.display = 'none';
+                    return;
+                }
+
+                // 감성 요약 테이블 (검색 결과 기준)
+                if (filterOffset === 0) {
+                    const sumSelectCols = newsType === 'topic'
+                        ? 'topic_id, topic_name, topic_category, sentiment'
+                        : 'ticker, ticker_name, market, sentiment';
+
+                    let summaryQuery = sb
+                        .from(tableName)
+                        .select(sumSelectCols)
+                        .order('collected_at', { ascending: false })
+                        .limit(500);
+
+                    if (newsType === 'stock') {
+                        if (ticker) summaryQuery = summaryQuery.eq('ticker', ticker);
+                        if (market) summaryQuery = summaryQuery.eq('market', market);
+                    } else {
+                        if (topicId) summaryQuery = summaryQuery.eq('topic_id', topicId);
+                    }
+                    if (sentiment) summaryQuery = summaryQuery.eq('sentiment', sentiment);
+                    if (impact) summaryQuery = summaryQuery.gte('impact_score', parseInt(impact));
+                    if (dateStart) summaryQuery = summaryQuery.gte('collected_at', dateStart + 'T00:00:00+09:00');
+                    if (dateEnd) summaryQuery = summaryQuery.lte('collected_at', dateEnd + 'T23:59:59+09:00');
+
+                    const { data: sumData } = await summaryQuery;
+
+                    // 테이블 헤더 동적 변경
+                    const titleEl = document.getElementById('filter-summary-title');
+                    const theadEl = document.getElementById('filter-summary-thead');
+                    if (newsType === 'topic') {
+                        titleEl.textContent = '주제별 감성 요약';
+                        theadEl.innerHTML = '<tr><th>주제</th><th>카테고리</th><th>뉴스</th><th>긍정</th><th>부정</th><th>중립</th><th>감성점수</th></tr>';
+                    } else {
+                        titleEl.textContent = '종목별 감성 요약';
+                        theadEl.innerHTML = '<tr><th>종목</th><th>시장</th><th>뉴스</th><th>긍정</th><th>부정</th><th>중립</th><th>감성점수</th></tr>';
+                    }
+
+                    renderSummaryTable('filter-summary-table', sumData || [], newsType);
+                    document.getElementById('filter-summary-section').style.display = 'block';
+                }
+
+                // 뉴스 카드 렌더링
+                document.getElementById('filter-timeline-title').style.display = 'block';
+                container.innerHTML = data.map(renderNewsCard).join('');
+
+                renderPagination('filter', filterOffset, filterTotal);
+            } catch (e) {
+                container.innerHTML = '<div class="loading" style="color:#c92a2a;">검색 실패: ' + e.message + '</div>';
+            }
+        }
+
+        function filterReset() {
+            document.getElementById('f-ticker').value = '';
+            document.getElementById('f-market').value = '';
+            document.getElementById('f-sentiment').value = '';
+            document.getElementById('f-impact').value = '';
+            setDefaultDates();
+            document.getElementById('filter-news-list').innerHTML = '';
+            document.getElementById('filter-result-header').style.display = 'none';
+            document.getElementById('filter-summary-section').style.display = 'none';
+            document.getElementById('filter-timeline-title').style.display = 'none';
+            document.getElementById('filter-pagination').style.display = 'none';
+        }
+
+        function filterPrevPage() {
+            filterOffset = Math.max(0, filterOffset - PAGE_SIZE);
+            filterSearch(false);
+        }
+        function filterNextPage() {
+            filterOffset += PAGE_SIZE;
+            filterSearch(false);
+        }
+
+        // =====================================================================
+        // 초기화
+        // =====================================================================
+        (async function init() {
+            setDefaultDates();
+            await Promise.all([loadTickers(), loadTopics(), loadAllNews()]);
+        })();
+    </script>
+</body>
+</html>
