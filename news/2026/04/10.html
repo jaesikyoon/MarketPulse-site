@@ -1,0 +1,2639 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketPulse - 2026-04-10 뉴스</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            color: #1a1a2e;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        header {
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 { font-size: 1.5rem; color: #16213e; }
+        .meta { color: #6c757d; font-size: 0.9rem; margin-top: 4px; }
+        h2 {
+            font-size: 1.2rem;
+            color: #16213e;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        /* 감성 테이블 */
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        .stock-table th, .stock-table td {
+            border: 1px solid #dee2e6;
+            padding: 8px 10px;
+            text-align: left;
+        }
+        .stock-table th {
+            background: #f1f3f5;
+            font-weight: 600;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        .stock-table td.num { text-align: center; }
+
+        /* 배지 */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .badge-positive { background: #d3f9d8; color: #2b8a3e; }
+        .badge-negative { background: #ffe3e3; color: #c92a2a; }
+        .badge-neutral { background: #e9ecef; color: #495057; }
+        .badge-impact { background: #fff3bf; color: #e67700; }
+        .badge-category { background: #e8f4f8; color: #1971c2; }
+        .badge-market-kr { background: #fef3c7; color: #92400e; }
+        .badge-market-us { background: #dbeafe; color: #1e40af; }
+
+        .score-positive { color: #37b24d; font-weight: 700; }
+        .score-negative { color: #e03131; font-weight: 700; }
+        .score-neutral { color: #868e96; font-weight: 700; }
+
+        /* 뉴스 타임라인 */
+        .batch-group { margin-bottom: 24px; }
+        .batch-header {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1971c2;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .batch-count {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #6c757d;
+        }
+        .news-item {
+            border-left: 3px solid #e9ecef;
+            padding: 10px 16px;
+            margin-bottom: 10px;
+            background: #fafbfc;
+            border-radius: 0 6px 6px 0;
+        }
+        .news-item.sentiment-positive { border-left-color: #37b24d; }
+        .news-item.sentiment-negative { border-left-color: #e03131; }
+        .news-item.sentiment-neutral { border-left-color: #868e96; }
+        .news-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+        .news-headline {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #16213e;
+            margin-bottom: 4px;
+        }
+        .news-summary {
+            font-size: 0.85rem;
+            color: #495057;
+            margin-bottom: 4px;
+        }
+        .news-reason {
+            font-size: 0.82rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+        .news-source {
+            font-size: 0.78rem;
+            color: #adb5bd;
+            margin-top: 4px;
+        }
+
+        /* 모드 탭 (종목/주제) */
+        .mode-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .mode-tab {
+            padding: 10px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: color 0.15s, border-color 0.15s;
+        }
+        .mode-tab:hover { color: #16213e; }
+        .mode-tab.active {
+            color: #1971c2;
+            border-bottom-color: #1971c2;
+        }
+        .mode-panel { display: none; }
+        .mode-panel.active { display: block; }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.85rem;
+        }
+        footer a { color: #6c757d; text-decoration: none; margin: 0 12px; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>2026-04-10 뉴스</h1>
+            <div class="meta">종목 104건, 주제 46건</div>
+        </header>
+
+        
+        
+        <div class="mode-tabs">
+            <div class="mode-tab active" onclick="switchMode('stock')">종목 뉴스</div>
+            <div class="mode-tab" onclick="switchMode('topic')">주제 뉴스</div>
+        </div>
+        
+
+        
+        <div id="panel-stock" class="mode-panel active">
+
+        
+        
+        <h2>종목별 감성 요약</h2>
+        <div style="overflow-x: auto;">
+        <table class="stock-table">
+            <thead>
+                <tr>
+                    <th>종목</th>
+                    <th>시장</th>
+                    <th>섹터</th>
+                    <th>뉴스</th>
+                    <th>긍정</th>
+                    <th>부정</th>
+                    <th>중립</th>
+                    <th>감성점수</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>AMD</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>반도체</td>
+                    <td class="num">7</td>
+                    <td class="num">5</td>
+                    <td class="num">0</td>
+                    <td class="num">2</td>
+                    <td class="num"><span class="score-positive">+71.4</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>TSMC</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>반도체</td>
+                    <td class="num">8</td>
+                    <td class="num">7</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-positive">+87.5</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>카카오</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>플랫폼</td>
+                    <td class="num">4</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num">3</td>
+                    <td class="num"><span class="score-negative">-25.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>Broadcom</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>반도체</td>
+                    <td class="num">9</td>
+                    <td class="num">7</td>
+                    <td class="num">0</td>
+                    <td class="num">2</td>
+                    <td class="num"><span class="score-positive">+77.8</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>Alphabet</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>빅테크/AI</td>
+                    <td class="num">4</td>
+                    <td class="num">4</td>
+                    <td class="num">0</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-positive">+100.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>삼성바이오로직스</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>바이오</td>
+                    <td class="num">5</td>
+                    <td class="num">2</td>
+                    <td class="num">2</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-neutral">+0.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>Tesla</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>전기차</td>
+                    <td class="num">6</td>
+                    <td class="num">1</td>
+                    <td class="num">4</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-negative">-50.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>LG에너지솔루션</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>2차전지</td>
+                    <td class="num">2</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-positive">+50.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>Apple</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>빅테크</td>
+                    <td class="num">8</td>
+                    <td class="num">2</td>
+                    <td class="num">2</td>
+                    <td class="num">4</td>
+                    <td class="num"><span class="score-neutral">+0.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>NVIDIA</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>반도체/AI</td>
+                    <td class="num">5</td>
+                    <td class="num">2</td>
+                    <td class="num">0</td>
+                    <td class="num">3</td>
+                    <td class="num"><span class="score-positive">+40.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>한화에어로스페이스</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>방산</td>
+                    <td class="num">7</td>
+                    <td class="num">2</td>
+                    <td class="num">2</td>
+                    <td class="num">3</td>
+                    <td class="num"><span class="score-neutral">+0.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>신한지주</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>금융</td>
+                    <td class="num">5</td>
+                    <td class="num">4</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-positive">+60.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>LG화학</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>화학/2차전지</td>
+                    <td class="num">2</td>
+                    <td class="num">0</td>
+                    <td class="num">0</td>
+                    <td class="num">2</td>
+                    <td class="num"><span class="score-neutral">+0.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>현대자동차</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>자동차</td>
+                    <td class="num">3</td>
+                    <td class="num">2</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-positive">+66.7</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>Microsoft</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>빅테크/AI</td>
+                    <td class="num">10</td>
+                    <td class="num">5</td>
+                    <td class="num">1</td>
+                    <td class="num">4</td>
+                    <td class="num"><span class="score-positive">+40.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>SK하이닉스</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>반도체</td>
+                    <td class="num">3</td>
+                    <td class="num">1</td>
+                    <td class="num">2</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-negative">-33.3</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>NAVER</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>플랫폼/AI</td>
+                    <td class="num">4</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num">3</td>
+                    <td class="num"><span class="score-negative">-25.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>삼성전자</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>반도체</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-negative">-100.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>Meta</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>빅테크/AI</td>
+                    <td class="num">5</td>
+                    <td class="num">4</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-positive">+60.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>삼성SDI</strong></td>
+                    <td class="num"><span class="badge badge-market-kr">KR</span></td>
+                    <td>2차전지</td>
+                    <td class="num">3</td>
+                    <td class="num">2</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-positive">+33.3</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>Amazon</strong></td>
+                    <td class="num"><span class="badge badge-market-us">US</span></td>
+                    <td>빅테크/클라우드</td>
+                    <td class="num">3</td>
+                    <td class="num">2</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-positive">+66.7</span></td>
+                </tr>
+                
+            </tbody>
+        </table>
+        </div>
+        
+
+        
+        
+        <h2>뉴스 타임라인</h2>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                07:44 수집
+                <span class="batch-count">41건</span>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">한화에어로스페이스</span>
+                </div>
+                <div class="news-headline">1분기 ‘불장’에 국민연금 주식평가액 78.5조 증가···전분기 대비 32%↑</div>
+                <div class="news-summary">국민연금의 주식 평가액이 1분기 증시 상승세에 따라 전 분기 대비 32% 증가하며 수익성이 크게 개선됨.</div>
+                <div class="news-reason">시장 전반의 강세장 분위기를 확인시켜 주지만, 개별 종목의 펀더멘털 변화를 시사하는 뉴스는 아님.</div>
+                <div class="news-source"><a href="http://www.s-d.kr/news/articleView.html?idxno=79457" target="_blank" rel="noopener">증권일보</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">실적</span>
+                    <span class="badge badge-market-kr">신한지주</span>
+                </div>
+                <div class="news-headline">‘4대 금융’ 1분기 순익 5조 시대…‘이익 체력’ 가른 결정적 한 방은?</div>
+                <div class="news-summary">신한지주를 포함한 4대 금융지주의 1분기 합산 순이익이 고금리 기조에 따른 이자이익 확대로 5조 원을 상회할 전망임.</div>
+                <div class="news-reason">주력 계열사인 은행의 이자이익 성장이 실적을 견인하며 기업 가치 상승에 직접적인 기여를 할 것으로 예상됨.</div>
+                <div class="news-source"><a href="https://www.ziksir.com/news/articleViewAmp.html?idxno=130264" target="_blank" rel="noopener">직썰</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">AMD</span>
+                </div>
+                <div class="news-headline">Investors Are Actively Seeking Information on Advanced Micro Devices, Inc. (AMD): Key Details You Should Be Aware Of</div>
+                <div class="news-summary">AMD가 최근 Zacks.com에서 가장 많이 검색되는 종목 중 하나로 꼽히며 투자자들의 높은 관심을 받고 있음.</div>
+                <div class="news-reason">투자자들의 활발한 정보 탐색과 높은 관심도는 시장 내 인지도 상승 및 잠재적인 매수세 유입 가능성을 시사함.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605348241" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">AMD</span>
+                </div>
+                <div class="news-headline">Why Is AMD Stock Up Today 4/8/26?</div>
+                <div class="news-summary">시장 전반의 상승 랠리와 분석가들의 긍정적인 평가에 힘입어 AMD 주가가 상승함.</div>
+                <div class="news-reason">분석가의 호평과 시장의 긍정적인 분위기가 결합되어 주가 상승의 직접적인 동력으로 작용함.</div>
+                <div class="news-source"><a href="https://www.tipranks.com/news/why-is-amd-stock-up-today-4-8-26" target="_blank" rel="noopener">TipRanks</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-us">AMD</span>
+                </div>
+                <div class="news-headline">Amazon.com, Inc. (AMZN) Stock Price, News, Quote & History</div>
+                <div class="news-summary">아마존(AMZN)의 주가 정보, 뉴스 및 투자 관련 주요 데이터를 제공함.</div>
+                <div class="news-reason">AMD가 아닌 타 종목(아마존)에 대한 정보를 담고 있어 AMD 주가 분석에 유효한 영향을 주지 않음.</div>
+                <div class="news-source"><a href="https://finance.yahoo.com/quote/AMZN/" target="_blank" rel="noopener">Yahoo Finance</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">TSMC</span>
+                </div>
+                <div class="news-headline">Nippon India Taiwan Fund Rides AI Boom, Faces Geopolitical Risks</div>
+                <div class="news-summary">대만 펀드가 AI 붐으로 높은 수익을 올리고 있으나, 포트폴리오 집중도와 지정학적 리스크가 투자자들에게 부담으로 작용함.</div>
+                <div class="news-reason">AI 산업의 강력한 성장성이라는 호재와 지정학적 불안정성이라는 악재가 공존하며 시장의 신중한 태도를 유도함.</div>
+                <div class="news-source"><a href="https://www.whalesbook.com/news/English/stock-investment-ideas/Nippon-India-Taiwan-Fund-Rides-AI-Boom-Faces-Geopolitical-Risks/69d75dc5d8f8f73d5340f6ad" target="_blank" rel="noopener">Whalesbook</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">LG화학</span>
+                </div>
+                <div class="news-headline">한국투자증권, S-Oil 업황 긍정 유지...정제마진 이미 좋다"</div>
+                <div class="news-summary">S-Oil이 정제마진 개선과 유가 상승에 힘입어 1분기 양호한 실적을 거둘 것으로 전망됨.</div>
+                <div class="news-reason">정유 업계의 호재는 화학 업종인 LG화학에 원가 상승 부담과 제품 가격 상승이라는 복합적인 영향을 미칠 수 있음.</div>
+                <div class="news-source"><a href="https://kdfnews.com/news/articleView.html?idxno=181578" target="_blank" rel="noopener">한국면세뉴스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">카카오</span>
+                </div>
+                <div class="news-headline">카카오 주가 전망: 035720, 하락세 속에 45,000~49,500원 박스권 예상</div>
+                <div class="news-summary">카카오 주가가 1.46% 하락하며 45,000~49,500원 사이의 박스권 정체 및 약세 모멘텀이 예상됨.</div>
+                <div class="news-reason">지속적인 매도 압력과 약한 주가 모멘텀이 언급되어 단기적인 주가 흐름에 부정적인 영향을 줄 수 있음.</div>
+                <div class="news-source"><a href="https://tradersunion.com/ko/news/financial-news/show/1866673-kakao-slides-1-46percent-to-krw47150/" target="_blank" rel="noopener">Traders Union</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">3 Top-Ranked AI Semiconductor Giants to Tap Huge Short-Term Upside</div>
+                <div class="news-summary">AI 반도체 수요가 견고한 가운데, 주요 하이퍼스케일러들의 투자 확대로 브로드컴을 포함한 AI 거물들의 단기 상승이 전망됩니다.</div>
+                <div class="news-reason">AI 산업의 강력한 수요와 대규모 인프라 투자는 반도체 대장주인 브로드컴의 실적 성장 기대감을 높입니다.</div>
+                <div class="news-source"><a href="https://www.tradingview.com/news/zacks:3eea81250094b:0-3-top-ranked-ai-semiconductor-giants-to-tap-huge-short-term-upside/" target="_blank" rel="noopener">TradingView</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">Broadcom Leads Semiconductor Surge as Geopolitical Relief Ignites Global Markets</div>
+                <div class="news-summary">지정학적 긴장 완화 속에 브로드컴 주가가 5% 급등하며 반도체 섹터 전반의 상승을 주도했습니다.</div>
+                <div class="news-reason">섹터 내 주도주로서의 입지를 증명했으며, 5%의 급등은 강력한 투자 심리와 긍정적인 시장 모멘텀을 반영합니다.</div>
+                <div class="news-source"><a href="http://markets.chroniclejournal.com/chroniclejournal/article/marketminute-2026-4-9-broadcom-leads-semiconductor-surge-as-geopolitical-relief-ignites-global-markets" target="_blank" rel="noopener">The Chronicle-Journal</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">AVGO (NASDAQ: AVGO) Rule 144 notice lists proposed sale of 1,000 shares</div>
+                <div class="news-summary">브로드컴이 1,000주의 보통주 매각 계획에 대한 Rule 144 통지서를 제출했습니다.</div>
+                <div class="news-reason">매각 규모가 1,000주로 매우 적어 전체 시가총액이나 거래량 대비 주가에 미치는 실질적인 영향은 거의 없습니다.</div>
+                <div class="news-source"><a href="https://www.stocktitan.net/sec-filings/AVGO/144-broadcom-inc-sec-filing-c87f31f9d4a8.html" target="_blank" rel="noopener">Stock Titan</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">Broadcom Joins Project Glasswing Linking AI Cybersecurity To Investor Story</div>
+                <div class="news-summary">브로드컴이 AI 모델을 사이버 보안에 적용하는 산업 협력 프로젝트인 'Project Glasswing'에 참여했습니다.</div>
+                <div class="news-reason">AI와 사이버 보안이라는 고성장 분야에서의 협력은 기업의 기술 경쟁력과 미래 성장 가치를 높이는 요소입니다.</div>
+                <div class="news-source"><a href="https://simplywall.st/stocks/us/semiconductors/nasdaq-avgo/broadcom/news/broadcom-joins-project-glasswing-linking-ai-cybersecurity-to" target="_blank" rel="noopener">Simply Wall Street</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-kr">NAVER</span>
+                </div>
+                <div class="news-headline">04/09 (목) 🟢 장마감 포인트</div>
+                <div class="news-summary">장마감 시황 포인트와 함께 유사투자자문업 관련 법적 고지 및 채널 운영 안내를 포함하고 있습니다.</div>
+                <div class="news-reason">일반적인 시장 정보와 운영 공지 사항으로, 네이버의 개별 기업 가치에 영향을 미치는 정보가 포함되어 있지 않습니다.</div>
+                <div class="news-source"><a href="https://contents.premium.naver.com/esslinsight/insight/contents/260409155005231pl" target="_blank" rel="noopener">네이버 프리미엄콘텐츠</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-kr">NAVER</span>
+                </div>
+                <div class="news-headline">스페이스X 대항마 로켓랩 ② 뉴트론 로켓 상업화 일정이 변수</div>
+                <div class="news-summary">스페이스X의 경쟁사인 로켓랩의 사업 현황과 뉴트론 로켓의 상업화 일정 및 리스크에 대해 분석한 내용입니다.</div>
+                <div class="news-reason">네이버 프리미엄콘텐츠에 게재된 외부 분석 글일 뿐, 네이버 기업 자체의 실적이나 가치와는 직접적인 관련이 없습니다.</div>
+                <div class="news-source"><a href="https://contents.premium.naver.com/gam/money/contents/260410003706564hs" target="_blank" rel="noopener">네이버 프리미엄콘텐츠</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">NAVER</span>
+                </div>
+                <div class="news-headline">네이버 주가는 모든 기간에서 매도세가 우위를 유지하며 조정 국면을 이어가고 있습니다.</div>
+                <div class="news-summary">네이버 주가가 모든 기간에서 매도세 우위를 보이며 조정 국면을 이어가고 있으며, 최근 0.79% 하락한 199,900원에 거래되었습니다.</div>
+                <div class="news-reason">기술적 분석상 매도세가 우세하고 주가가 하락세를 보이고 있어 단기적으로 부정적인 심리가 반영되었습니다.</div>
+                <div class="news-source"><a href="https://tradersunion.com/ko/news/financial-news/show/1866646-naver-drops-0-79percent-to-krw199900/" target="_blank" rel="noopener">Traders Union</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-us">Meta</span>
+                </div>
+                <div class="news-headline">CoreWeave’s Meta-Backed Loan: De-Risking Growth or Greenwashing a Capital Play?</div>
+                <div class="news-summary">Meta가 지원하는 CoreWeave가 성장을 위한 85억 달러 규모의 대규모 대출 시설을 확보했습니다.</div>
+                <div class="news-reason">Meta가 지원하는 파트너사의 대규모 자금 조달은 인프라 확장 및 AI 생태계 강화 측면에서 긍정적입니다.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605352494" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">Meta</span>
+                </div>
+                <div class="news-headline">Meta Platforms Inc Stock (META) Moved Up by 3.52% on Apr 9: What Investors Need To Know</div>
+                <div class="news-summary">AI 모델 'Muse Spark' 출시와 시장 심리 개선에 힘입어 Meta의 주가가 3.52% 상승했습니다.</div>
+                <div class="news-reason">신제품 출시가 제품 경쟁력 강화로 해석되어 주가에 긍정적인 모멘텀을 제공했습니다.</div>
+                <div class="news-source"><a href="https://www.tradingkey.com/news/Market-Movers/261767170-market-movers-meta-20260409" target="_blank" rel="noopener">TradingKey</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">Meta</span>
+                </div>
+                <div class="news-headline">Meta Unveils Muse Spark AI Model, Shares Rise 6%</div>
+                <div class="news-summary">Meta가 새로운 AI 모델인 'Muse Spark'를 공개한 후 주가가 6% 상승했습니다.</div>
+                <div class="news-reason">신규 AI 기술 공개가 시장의 긍정적인 반응을 이끌어내며 실제 주가 상승으로 이어졌습니다.</div>
+                <div class="news-source"><a href="https://www.tradingview.com/news/gurufocus:10b53e594094b:0-meta-unveils-muse-spark-ai-model-shares-rise-6/" target="_blank" rel="noopener">TradingView</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Meta</span>
+                </div>
+                <div class="news-headline">Rosenblatt cuts Meta stock price target on Iran war impact By Investing.com</div>
+                <div class="news-summary">로젠블랫이 이란 전쟁의 영향을 반영하여 Meta의 목표 주가를 1,144달러에서 1,015달러로 하향 조정했습니다.</div>
+                <div class="news-reason">지정학적 리스크로 인한 목표 주가 하향은 투자 심리에 부정적인 영향을 줄 수 있습니다.</div>
+                <div class="news-source"><a href="https://za.investing.com/news/stock-market-news/rosenblatt-cuts-meta-stock-price-target-on-iran-war-impact-93CH-4204239" target="_blank" rel="noopener">Investing.com South Africa</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">삼성SDI</span>
+                </div>
+                <div class="news-headline">[생생한 주식쇼 생쇼] 조정장은 매수 기회, 반도체 및 저평가 증권주 주목</div>
+                <div class="news-summary">현재의 지수 조정을 우량주 매수 기회로 판단하며, 외국인 수급 개선과 함께 점진적인 상승장을 기대함.</div>
+                <div class="news-reason">시장 전반에 대한 긍정적 전망은 우량주인 삼성SDI에 우호적이나, 주도주로 반도체와 증권주가 강조되어 섹터 간 차별화 가능성이 있음.</div>
+                <div class="news-source"><a href="https://mbnmoney.mbn.co.kr/news/view?news_no=MM1005810437" target="_blank" rel="noopener">매일경제TV</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">매크로</span>
+                    <span class="badge badge-market-kr">삼성SDI</span>
+                </div>
+                <div class="news-headline">[증시 인사이트] 국내증시 동반 하락 마감…코스피 5800선 후퇴</div>
+                <div class="news-summary">지정학적 리스크와 국내 증시의 동반 하락으로 인해 코스피 지수가 후퇴하며 전반적인 투자 심리가 위축됨.</div>
+                <div class="news-reason">대외 불확실성 증가와 시장 전체의 하락세는 시가총액 상위 종목인 삼성SDI의 주가에 하방 압력으로 작용함.</div>
+                <div class="news-source"><a href="https://biz.sbs.co.kr/amp/article/20000303256" target="_blank" rel="noopener">SBS Biz</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Alphabet</span>
+                </div>
+                <div class="news-headline">The AI Stock I Would Choose to Invest $1,000 In Before the Market Recovers</div>
+                <div class="news-summary">Alphabet은 시장 회복 전 투자해야 할 선도적인 AI 종목으로 꼽히며 긍정적인 투자 전망을 보여주고 있습니다.</div>
+                <div class="news-reason">AI 분야에서의 선도적 지위와 시장 회복 시 높은 수익률이 기대되는 종목으로 추천된 점이 투자 심리에 긍정적입니다.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605351497" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">Alphabet</span>
+                </div>
+                <div class="news-headline">Alphabet (GOOGL) Is Up 6.7% After Deepening Broadcom–Anthropic AI Infrastructure Ties - Has The Bull Case Changed?</div>
+                <div class="news-summary">Alphabet이 Broadcom 및 Anthropic과의 협력을 통해 TPU 칩 및 네트워킹 공급 계약 등 AI 인프라를 강화하며 주가가 6.7% 상승했습니다.</div>
+                <div class="news-reason">AI 핵심 인프라 역량 강화와 전략적 파트너십 확대는 장기적인 성장 동력으로 작용하며 시장의 강력한 신뢰를 얻고 있습니다.</div>
+                <div class="news-source"><a href="https://simplywall.st/stocks/us/media/nasdaq-googl/alphabet/news/alphabet-googl-is-up-67-after-deepening-broadcomanthropic-ai/amp" target="_blank" rel="noopener">Simply Wall Street</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">현대자동차</span>
+                </div>
+                <div class="news-headline">'삼전닉스' 다음은 시총 3위 현대차, 목표가 80만원까지 웃돌아</div>
+                <div class="news-summary">현대자동차가 삼성전자와 SK하이닉스의 뒤를 잇는 주도주로 주목받으며 증권가 목표주가가 80만 원까지 상향 조정되었습니다.</div>
+                <div class="news-reason">증권가의 대폭적인 목표가 상향은 기업 가치에 대한 긍정적인 전망과 강력한 투자 심리를 반영합니다.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n02692" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Amazon</span>
+                </div>
+                <div class="news-headline">Amazon Shares: AI-Driven Revenue Growth and Cautionary Signs in Trading Volume</div>
+                <div class="news-summary">AI 기반의 매출 성장이라는 긍정적 요인과 거래량 감소라는 기술적 우려가 공존하며 주가가 기로에 서 있음.</div>
+                <div class="news-reason">비즈니스 펀더멘털은 견고하나 기술적 지표에서 경고 신호가 나타나고 있어 중립적인 관점의 분석이 필요함.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605352973" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">Amazon</span>
+                </div>
+                <div class="news-headline">Short-seller Andrew Left thinks Amazon just showed that it's the biggest threat to Nvidia's chip dominance</div>
+                <div class="news-summary">유명 투자자 앤드류 레프트가 아마존의 AI 확장이 엔비디아를 위협할 것이라 평가하며 목표 주가를 300달러로 제시함.</div>
+                <div class="news-reason">AI 칩 시장에서의 경쟁력 인정과 매우 높은 목표 주가 제시는 기업의 미래 가치에 대한 강력한 신뢰를 보여줌.</div>
+                <div class="news-source"><a href="https://www.businessinsider.com/amazon-ai-chips-aws-andy-jassy-letter-nvidia-amzn-nvda-2026-4" target="_blank" rel="noopener">Business Insider</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Amazon</span>
+                </div>
+                <div class="news-headline">Amazon Stock Rises 5.6% on Analyst Upgrade</div>
+                <div class="news-summary">Cantor Fitzgerald의 목표 주가 상향 조정 소식에 힘입어 아마존 주가가 장중 5.6% 급등함.</div>
+                <div class="news-reason">기관 분석가의 긍정적인 전망과 목표가 상향은 투자 심리를 강화하여 주가 상승의 직접적인 원인이 됨.</div>
+                <div class="news-source"><a href="https://nationaltoday.com/us/wa/seattle/news/2026/04/09/amazon-stock-rises-5-6-on-analyst-upgrade/" target="_blank" rel="noopener">National Today</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">삼성바이오로직스</span>
+                </div>
+                <div class="news-headline">창사 후 첫 파업 위기 직면한 삼성바이오로직스…영향은?</div>
+                <div class="news-summary">삼성바이오로직스가 창사 이래 첫 파업 위기에 직면하며 생산 차질에 대한 우려가 제기되고 있습니다.</div>
+                <div class="news-reason">노사 갈등으로 인한 파업 가능성은 생산 공정의 안정성을 저해하고 경영 불확실성을 높이는 직접적인 악재입니다.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260409n05347" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">규제</span>
+                    <span class="badge badge-market-us">Tesla</span>
+                </div>
+                <div class="news-headline">Tesla's 'most affordable' EVs still cost more than $35,000. These policies may be why.</div>
+                <div class="news-summary">관세 불확실성, 원자재 부족, 청정 에너지 세액 공제 폐지 우려 등으로 인해 테슬라 저가형 모델의 가격 인하가 어려움.</div>
+                <div class="news-reason">정책적 불확실성과 비용 상승 요인이 저가형 모델의 가격 경쟁력을 저해하여 향후 수요에 부정적 영향을 줄 수 있음.</div>
+                <div class="news-source"><a href="https://www.aol.com/news/teslas-most-affordable-evs-still-101401847.html" target="_blank" rel="noopener">AOL.com</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-us">Tesla</span>
+                </div>
+                <div class="news-headline">How Obayashi’s Planned Stock-Granting ESOP Trust Will Impact Obayashi (TSE:1802) Investors</div>
+                <div class="news-summary">오바야시 코퍼레이션이 직원 인센티브 제도의 일환으로 주식 증여 ESOP 신탁 도입을 검토 중임.</div>
+                <div class="news-reason">테슬라가 아닌 타 기업(오바야시)의 경영 소식으로 테슬라 주가와는 직접적인 상관관계가 없음.</div>
+                <div class="news-source"><a href="https://simplywall.st/stocks/jp/capital-goods/tse-1802/obayashi-shares/news/how-obayashis-planned-stock-granting-esop-trust-will-impact" target="_blank" rel="noopener">Simply Wall Street</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Tesla</span>
+                </div>
+                <div class="news-headline">Why Tesla stock is down 1% despite reports of a new EV</div>
+                <div class="news-summary">새로운 전기차 출시 소식에도 불구하고 테슬라 주가가 상승세를 유지하지 못하고 약 1% 하락함.</div>
+                <div class="news-reason">신차 관련 호재가 있었음에도 불구하고 시장의 매수세가 이어지지 않아 단기적인 투자 심리 위축을 보여줌.</div>
+                <div class="news-source"><a href="https://www.tradingview.com/news/invezz:d436bb1f2094b:0-why-tesla-stock-is-down-1-despite-reports-of-a-new-ev/" target="_blank" rel="noopener">TradingView</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">Got $1,000? Here Are the Smartest Artificial Intelligence (AI) Stocks to Buy While the Market Is in Correction Mode.</div>
+                <div class="news-summary">시장 조정기를 활용해 매수해야 할 유망한 AI 종목 중 하나로 마이크로소프트를 추천하고 있습니다.</div>
+                <div class="news-reason">현재의 시장 조정을 장기적 관점에서 우량 AI 종목의 저가 매수 기회로 판단하고 있습니다.</div>
+                <div class="news-source"><a href="https://www.fool.com/investing/2026/04/08/got-1000-here-are-the-smartest-artificial-intellig/" target="_blank" rel="noopener">The Motley Fool</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">매크로</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">Microsoft stock slides slightly as Iranian threats against UAE datacenters weigh on tech sector</div>
+                <div class="news-summary">중동 지역 데이터센터에 대한 지정학적 위협과 약세 기술 지표의 영향으로 주가가 1.54% 하락했습니다.</div>
+                <div class="news-reason">지정학적 리스크 부각과 기술적 저항선 확인은 단기적인 주가 하락 압력으로 작용합니다.</div>
+                <div class="news-source"><a href="https://tradersunion.com/news/financial-news/show/1865815-microsoft-slides-1-54percent-today-to/" target="_blank" rel="noopener">Traders Union</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">LG에너지솔루션</span>
+                </div>
+                <div class="news-headline">공급망 안정화 기금 대출로 LG Energy Solution 주가 3.33% 상승</div>
+                <div class="news-summary">공급망 안정화 기금 대출 지원 소식과 함께 주가가 3.33% 상승하며 강한 기술적 지지선을 확보함.</div>
+                <div class="news-reason">정부 차원의 금융 지원을 통한 공급망 안정화와 실제 주가의 유의미한 상승이 확인되어 투자 심리에 긍정적임.</div>
+                <div class="news-source"><a href="https://tradersunion.com/ko/news/financial-news/show/1866894-lg-energy-solution-gains-3-33percent/" target="_blank" rel="noopener">Traders Union</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">SK하이닉스</span>
+                </div>
+                <div class="news-headline">SK하이닉스 주가 전망: 000660이 3.68% 하락하며 ₩970,000–₩1,020,000 구간에서 거래</div>
+                <div class="news-summary">SK하이닉스 주가가 3.68% 하락하며 995,000원에 거래되고 있으며, 기술적 지표상 변동성이 확대되었습니다.</div>
+                <div class="news-reason">당일 주가 하락폭이 비교적 크고 변동성이 높아진 점은 단기 투자 심리에 부정적인 영향을 미칩니다.</div>
+                <div class="news-source"><a href="https://tradersunion.com/ko/news/financial-news/show/1865925-sk-hynix-slides-3-68percent-to/" target="_blank" rel="noopener">Traders Union</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">매크로</span>
+                    <span class="badge badge-market-us">Apple</span>
+                </div>
+                <div class="news-headline">Apple’s Tariff "Sell the News" Setup: Relief Rally Meets Unresolved China Risk</div>
+                <div class="news-summary">트럼프 행정부의 관세 발표 이후 안도 랠리가 나타났으나, 여전히 해결되지 않은 중국 관련 리스크가 존재함.</div>
+                <div class="news-reason">단기적인 주가 반등은 긍정적이나, 관세와 관련된 근본적인 불확실성이 해소되지 않아 상방이 제한될 수 있음.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605352831" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">규제</span>
+                    <span class="badge badge-market-us">Apple</span>
+                </div>
+                <div class="news-headline">Apple’s Chinese AI Patent Loss Raises Questions For Growth And Valuation</div>
+                <div class="news-summary">중국 최고인민법원이 샤오이 로봇의 AI 특허를 무효화하려던 애플의 상고를 최종 기각함.</div>
+                <div class="news-reason">중요한 성장 동력인 AI 분야에서 중국 내 법적 패소는 향후 사업 확장 및 밸류에이션에 직접적인 타격을 줄 수 있음.</div>
+                <div class="news-source"><a href="https://simplywall.st/stocks/us/tech/nasdaq-aapl/apple/news/apples-chinese-ai-patent-loss-raises-questions-for-growth-an" target="_blank" rel="noopener">Simply Wall Street</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Apple</span>
+                </div>
+                <div class="news-headline">Buffett Reflects On Apple Sale As Berkshire Balances Patience And Opportunity</div>
+                <div class="news-summary">워런 버핏이 과거 애플 지분 매각에 대해 후회를 표하며, 적절한 가격이 오면 추가 매수할 의향이 있음을 시사함.</div>
+                <div class="news-reason">세계적인 투자자 버핏의 긍정적인 평가와 추가 매수 가능성은 투자 심리에 강력한 지지 요인으로 작용함.</div>
+                <div class="news-source"><a href="https://simplywall.st/stocks/us/diversified-financials/nyse-brk.b/berkshire-hathaway/news/buffett-reflects-on-apple-sale-as-berkshire-balances-patienc" target="_blank" rel="noopener">Simply Wall Street</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-us">NVIDIA</span>
+                </div>
+                <div class="news-headline">GE Vernova (GEV) Stock Is Up, What You Need To Know</div>
+                <div class="news-summary">에너지 전환 기업인 GE 베르노바가 분석가들의 긍정적인 평가에 힘입어 주가가 4% 상승했다.</div>
+                <div class="news-reason">엔비디아나 반도체/AI 섹터와 직접적인 관련이 없는 타 산업군 종목의 뉴스이므로 주가 영향이 미미하다.</div>
+                <div class="news-source"><a href="https://www.tradingview.com/news/stockstory:76fac99f1094b:0-ge-vernova-gev-stock-is-up-what-you-need-to-know/" target="_blank" rel="noopener">TradingView</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">NVIDIA</span>
+                </div>
+                <div class="news-headline">Barclays Just Raised Marvell to Overweight. Here’s Why the AI Chip Race Is Far From Over</div>
+                <div class="news-summary">바클레이즈가 경쟁사인 마벨 테크놀로지의 등급을 상향하며 AI 칩 시장의 경쟁이 여전히 치열함을 시사했다.</div>
+                <div class="news-reason">AI 산업 전반의 성장성을 확인시켜주지만, 경쟁사의 부각은 엔비디아에게 시장 점유율 측면에서 중립적인 영향을 미친다.</div>
+                <div class="news-source"><a href="https://www.aol.com/articles/barclays-just-raised-marvell-overweight-142852434.html" target="_blank" rel="noopener">AOL.com</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">NVIDIA</span>
+                </div>
+                <div class="news-headline">Nvidia's Stock Price Should Be 400% Higher: Analyst</div>
+                <div class="news-summary">UBS 분석가는 엔비디아의 수익 및 이익 성장을 근거로 현재 주가가 매우 저평가되어 있으며, 400% 더 높아야 한다고 주장했다.</div>
+                <div class="news-reason">주요 투자은행의 매우 낙관적인 가치 평가와 목표가 제시는 투자 심리를 크게 개선시킬 수 있는 요소이다.</div>
+                <div class="news-source"><a href="https://www.theglobeandmail.com/investing/markets/markets-news/Motley%20Fool/1228630/nvidia-s-stock-price-should-be-400-higher-analyst/" target="_blank" rel="noopener">The Globe and Mail</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                09:47 수집
+                <span class="batch-count">10건</span>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">한화에어로스페이스</span>
+                </div>
+                <div class="news-headline">풍산홀딩스, 한화에어로스페이스 방산 인수 백지화에 17%대 급락</div>
+                <div class="news-summary">한화에어로스페이스가 풍산 방산 부문 인수를 백지화함에 따라 관련 테마로 상승했던 풍산홀딩스 주가가 큰 폭으로 하락함.</div>
+                <div class="news-reason">인수 합병 중단은 단기적인 성장 모멘텀 약화로 보일 수 있으나, 무리한 확장을 경계하는 시장 관점에서는 재무 안정성 측면에서 중립적인 요인임.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n07969" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">한화에어로스페이스</span>
+                </div>
+                <div class="news-headline">풍산홀딩스 주가 장중 17%대 급락, 한화에어로 방산부문 인수 무산 영향</div>
+                <div class="news-summary">한화에어로스페이스의 풍산 방산 부문 인수 검토가 중단되면서 피인수 기대감이 사라진 풍산홀딩스의 주가가 급락함.</div>
+                <div class="news-reason">인수 무산은 피인수 기업인 풍산에는 악재이나, 인수 주체인 한화에어로스페이스 입장에서는 대규모 자금 지출 리스크가 해소된 것으로 볼 수 있어 중립적임.</div>
+                <div class="news-source"><a href="https://www.businesspost.co.kr/BP?command=article_view&num=435405" target="_blank" rel="noopener">비즈니스포스트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">신한지주</span>
+                </div>
+                <div class="news-headline">삼성전자 어닝 서프라이즈에 코스피 연간 이익 전망 753조로 급등</div>
+                <div class="news-summary">삼성전자의 어닝 서프라이즈로 인해 코스피 상장사들의 연간 이익 전망치가 상향 조정되며 시장 전반의 기대감이 높아지고 있다.</div>
+                <div class="news-reason">시장 전체의 이익 전망치 상승은 코스피 대형주인 신한지주에 대한 투자 심리 개선에 긍정적인 영향을 미친다.</div>
+                <div class="news-source"><a href="https://www.sedaily.com/article/20030750" target="_blank" rel="noopener">서울경제</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 5/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">AMD</span>
+                </div>
+                <div class="news-headline">AMD’s $60B Meta Deal: How It Breaks NVIDIA’s AI Monopoly</div>
+                <div class="news-summary">AMD가 메타(Meta)와 600억 달러 규모의 맞춤형 MI450 GPU 공급 계약을 체결하며 엔비디아의 AI 독점 체제에 도전합니다.</div>
+                <div class="news-reason">대형 고객사 확보와 막대한 계약 규모는 향후 매출 증대 및 AI 칩 시장 점유율 확대에 결정적인 호재로 작용할 가능성이 매우 높습니다.</div>
+                <div class="news-source"><a href="https://www.techi.com/amd-meta-60b-deal-nvidia-ai-monopoly/" target="_blank" rel="noopener">Techi</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">Broadcom (NASDAQ:AVGO) Stock Price Up 5% - Should You Buy?</div>
+                <div class="news-summary">브로드컴 주가가 거래 중 5% 상승하며 350달러 선을 돌파하는 등 강한 매수세를 보였습니다.</div>
+                <div class="news-reason">단기적인 주가 급등은 투자자들의 높은 신뢰와 긍정적인 시장 심리를 반영합니다.</div>
+                <div class="news-source"><a href="https://www.marketbeat.com/instant-alerts/broadcom-nasdaqavgo-stock-price-up-5-should-you-buy-2026-04-08/" target="_blank" rel="noopener">MarketBeat</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Meta</span>
+                </div>
+                <div class="news-headline">Meta Platforms (META) Surpasses Broader Market Performance: Key Information</div>
+                <div class="news-summary">메타가 최근 거래 세션에서 2.58% 상승하며 시장 평균 수익률을 상회하는 성과를 기록했습니다.</div>
+                <div class="news-reason">시장 전체의 흐름보다 강한 상승세를 보이며 종목의 상대적 강세와 견고한 투자 수요를 증명했습니다.</div>
+                <div class="news-source"><a href="https://www.bitget.com/news/detail/12560605353547" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">삼성SDI</span>
+                </div>
+                <div class="news-headline">[핫스톡 현미경] 엘앤에프, '적자 늪' 넘고 2차전지 소재 '블루칩' 등극하나</div>
+                <div class="news-summary">2차전지 소재 기업인 엘앤에프가 전기차 업황 개선 기대감에 힘입어 반등 흐름을 보이고 있습니다.</div>
+                <div class="news-reason">밸류체인 내 소재 기업의 업황 회복 전망은 배터리 셀 제조사인 삼성SDI에도 긍정적인 업황 신호로 작용합니다.</div>
+                <div class="news-source"><a href="http://www.seoulwire.com/news/articleView.html?idxno=716102" target="_blank" rel="noopener">서울와이어</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">규제</span>
+                    <span class="badge badge-market-us">Alphabet</span>
+                </div>
+                <div class="news-headline">Alphabet stock trades flat after DOJ mandate shields core business</div>
+                <div class="news-summary">미 법무부(DOJ)의 명령이 핵심 사업을 보호하는 방향으로 해석되면서 규제 불확실성이 해소되어 주가가 강세 모멘텀을 보이고 있다.</div>
+                <div class="news-reason">가장 큰 리스크였던 규제 이슈가 핵심 사업을 방어하는 방향으로 전개됨에 따라 투자자들의 불안감이 해소되었다.</div>
+                <div class="news-source"><a href="https://tradersunion.com/news/financial-news/show/1867828-alphabet-up-0-61percent-today-at/" target="_blank" rel="noopener">Traders Union</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">삼성바이오로직스</span>
+                </div>
+                <div class="news-headline">[개장시황] 코스피, 하루 만에 반등…반도체株 강세에 1%대 상승</div>
+                <div class="news-summary">반도체주 강세와 반발 매수세에 힘입어 코스피가 하루 만에 1%대 반등하며 회복세를 보이고 있습니다.</div>
+                <div class="news-reason">증시 전반의 반등 분위기와 투자 심리 회복은 대형주인 삼성바이오로직스 주가에 긍정적인 수급 환경을 조성합니다.</div>
+                <div class="news-source"><a href="https://www.newspim.com/news/view/20260410000160" target="_blank" rel="noopener">뉴스핌</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">Microsoft Stock Down 20%, Strong Future Potential Ahead</div>
+                <div class="news-summary">최근 주가가 고점 대비 크게 하락했으나, 전문가들은 여전히 강력한 미래 성장 잠재력을 보유하고 있다고 분석합니다.</div>
+                <div class="news-reason">과거의 가격 하락보다는 향후 반등 가능성과 펀더멘털의 견고함에 초점을 맞춘 분석입니다.</div>
+                <div class="news-source"><a href="https://intellectia.ai/news/stock/microsoft-stock-down-20-strong-future-potential-ahead" target="_blank" rel="noopener">Intellectia AI</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                14:04 수집
+                <span class="batch-count">22건</span>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">한화에어로스페이스</span>
+                </div>
+                <div class="news-headline">[특징주] 풍산홀딩스, 한화에어로의 방산 인수 검토 중단에 급락</div>
+                <div class="news-summary">한화에어로스페이스의 풍산 방산 인수 검토 중단 보도로 인해 시장 내 방산 섹터 재편 기대감이 위축되었습니다.</div>
+                <div class="news-reason">인수합병을 통한 시장 지배력 강화 계획이 중단된 것으로 해석되어 주가에 하방 압력으로 작용할 수 있습니다.</div>
+                <div class="news-source"><a href="https://www.yna.co.kr/amp/view/AKR20260410035600008" target="_blank" rel="noopener">연합뉴스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">한화에어로스페이스</span>
+                </div>
+                <div class="news-headline">[특징주] 풍산홀딩스, 한화에어로의 방산 인수 무산에 급락(종합)</div>
+                <div class="news-summary">한화에어로스페이스의 풍산 방산 부문 인수 검토가 중단되면서 관련 논의가 최종 무산되었습니다.</div>
+                <div class="news-reason">방산 부문 수직 계열화 및 사업 확장을 위한 인수합병 기대감이 사라지며 성장 모멘텀이 일부 약화되었습니다.</div>
+                <div class="news-source"><a href="https://www.yna.co.kr/amp/view/AKR20260410035651008" target="_blank" rel="noopener">연합뉴스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">신한지주</span>
+                </div>
+                <div class="news-headline">[테마시황] 철강·은행주, 중동 재건 기대감 및 견조한 실적 전망에 '강세'</div>
+                <div class="news-summary">은행주가 견조한 실적 전망과 중동 재건 모멘텀 등 외부 호재가 겹치며 시장에서 강세를 나타냄.</div>
+                <div class="news-reason">업종 전반의 실적 호조 전망과 매수세 유입은 대표적인 은행주인 신한지주 주가에 긍정적인 동력임.</div>
+                <div class="news-source"><a href="https://www.infostockdaily.co.kr/news/articleView.html?idxno=215264" target="_blank" rel="noopener">인포스탁데일리</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">신한지주</span>
+                </div>
+                <div class="news-headline">[특징주] 금리 상승에 1분기 실적 긍정 전망…금융株 상승 - 조선비즈</div>
+                <div class="news-summary">금리 상승에 따른 순이자마진 개선 기대감으로 금융지주들의 1분기 실적이 긍정적으로 전망되며 주가가 강세를 보임.</div>
+                <div class="news-reason">금리 상승이 은행의 수익성 지표인 순이자마진(NIM)을 개선시켜 실적 상승으로 이어질 것이라는 기대감이 반영됨.</div>
+                <div class="news-source"><a href="https://biz.chosun.com/stock/stock_general/2026/04/10/PORVGP2ENBG57NCF2TP4OT2IYU/" target="_blank" rel="noopener">Chosunbiz</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">AMD</span>
+                </div>
+                <div class="news-headline">AMD Stock Climbs Alongside the Reveal of the Most Expensive Ryzen CPU Yet</div>
+                <div class="news-summary">AMD가 역대 최고가 CPU인 Ryzen 9950X3D2 듀얼 에디션의 가격을 공개한 후 주가가 상승함.</div>
+                <div class="news-reason">고성능 신제품 출시를 통해 기술 경쟁력을 입증하고 수익성 개선에 대한 기대감을 높였음.</div>
+                <div class="news-source"><a href="https://www.tipranks.com/news/amd-stock-climbs-alongside-the-reveal-of-the-most-expensive-ryzen-cpu-yet" target="_blank" rel="noopener">TipRanks</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">AMD</span>
+                </div>
+                <div class="news-headline">AMD's Stock Momentum Climbs As 'Agentic AI' And Gigawatt Megadeals Fuel Surge</div>
+                <div class="news-summary">에이전틱 AI(Agentic AI)와 대규모 계약 체결 소식에 힘입어 AMD의 주가 모멘텀과 기술적 지표가 강력한 상승세를 보임.</div>
+                <div class="news-reason">AI 분야의 성장 동력과 대형 계약이라는 강력한 펀더멘털 요소가 주가 상승의 직접적인 원인으로 작용함.</div>
+                <div class="news-source"><a href="https://www.aol.com/articles/amds-stock-momentum-climbs-agentic-033130889.html" target="_blank" rel="noopener">AOL.com</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-kr">카카오</span>
+                </div>
+                <div class="news-headline">HD현대, 자회사 고른 호조에 성장·환원 부각…목표가 37만원 유지-흥국</div>
+                <div class="news-summary">HD현대의 자회사 호조와 실적 개선을 바탕으로 목표주가가 유지되었습니다.</div>
+                <div class="news-reason">해당 뉴스는 카카오가 아닌 HD현대에 관한 내용으로, 카카오 주가에는 직접적인 영향이 없습니다.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n04273" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">NIA IMPACT ADVISORS, LLC's Broadcom Inc(AVGO) Holding History</div>
+                <div class="news-summary">특정 투자 자문사의 브로드컴 지분 보유 현황을 공시했으나 해당 기간 내 매매 거래는 발생하지 않음.</div>
+                <div class="news-reason">기관 투자자의 지분 변동이 없다는 사실은 주가에 새로운 모멘텀이나 영향을 주지 않는 중립적인 정보임.</div>
+                <div class="news-source"><a href="https://www.gurufocus.com/guru-portfolio/NIA%20IMPACT%20ADVISORS,%20LLC/AVGO" target="_blank" rel="noopener">GuruFocus</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">Broadcom Appoints New CFO: Strengthening Leadership for a $1.5 Trillion Valuation Amid Rapid Expansion</div>
+                <div class="news-summary">급격한 기업 확장과 가치 상승에 발맞춰 리더십 강화를 위해 새로운 CFO를 임명함.</div>
+                <div class="news-reason">전략적 성장을 뒷받침하기 위한 경영진 교체는 기업 운영의 효율성과 미래 비전에 대한 기대감을 높임.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605353728" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-kr">NAVER</span>
+                </div>
+                <div class="news-headline">사료 관련주 TOP 10 | 곡물 대장주 테마주</div>
+                <div class="news-summary">국제 곡물 가격 및 축산 수요와 관련된 사료 관련주 및 대장주 테마에 대한 정보를 다루고 있습니다.</div>
+                <div class="news-reason">네이버 플랫폼 내 콘텐츠이나, 네이버 기업 자체의 가치나 주가와는 직접적인 연관성이 없는 타 산업군 뉴스입니다.</div>
+                <div class="news-source"><a href="https://contents.premium.naver.com/stockblog/stock/contents/260410085755963lx" target="_blank" rel="noopener">네이버 프리미엄콘텐츠</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">현대자동차</span>
+                </div>
+                <div class="news-headline">KB증권 "현대차, 투자 매력 독보적…목표가 80만원"</div>
+                <div class="news-summary">KB증권은 현대차의 투자 매력이 독보적이라며 투자의견 '매수'와 목표주가 80만 원을 유지했습니다.</div>
+                <div class="news-reason">대형 증권사의 강력한 매수 추천과 높은 목표 주가는 주가 상승의 촉매제 역할을 합니다.</div>
+                <div class="news-source"><a href="https://www.etoday.co.kr/news/view/2574113" target="_blank" rel="noopener">이투데이</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">삼성바이오로직스</span>
+                </div>
+                <div class="news-headline">코스피, 휴전 지속 안도감에 상승 출발…하이닉스 3%↑</div>
+                <div class="news-summary">중동 휴전 지속에 따른 안도감으로 코스피가 상승 출발하며 시장 분위기가 반전되었습니다.</div>
+                <div class="news-reason">지정학적 리스크 완화로 인한 전반적인 시장 지수 상승은 대형주인 삼성바이오로직스 주가에 긍정적인 요인으로 작용합니다.</div>
+                <div class="news-source"><a href="https://tv.edaily.co.kr/News/NewsRead?NewsId=02728966645414808&Kind=257" target="_blank" rel="noopener">이데일리TV</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">Tesla</span>
+                </div>
+                <div class="news-headline">Tesla's Compact SUV Gamble Amid Mounting Inventory Pressures</div>
+                <div class="news-summary">1분기 인도량 미달로 인한 재고 압박 속에서 저가형 컴팩트 SUV 개발과 FSD 기술 발전에 주력하고 있음.</div>
+                <div class="news-reason">5만 대 이상의 재고 누적과 인도량 부족은 단기 실적 악화의 직접적인 신호이며 기업 운영에 부담으로 작용함.</div>
+                <div class="news-source"><a href="https://www.ad-hoc-news.de/boerse/news/ueberblick/tesla-s-compact-suv-gamble-amid-mounting-inventory-pressures/69115649" target="_blank" rel="noopener">AD HOC NEWS</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">Microsoft: The Market Is Forcing Me To Buy This Bargain (Rating Upgrade)</div>
+                <div class="news-summary">클라우드와 AI 인프라 투자를 바탕으로 한 지속적인 수요 성장을 근거로 투자의견이 상향 조정됨.</div>
+                <div class="news-reason">분석가의 등급 상향(Upgrade)과 현재 주가를 저평가된 매수 기회로 보는 시각은 투자 심리에 긍정적으로 작용함.</div>
+                <div class="news-source"><a href="https://seekingalpha.com/article/4889128-microsoft-market-is-forcing-me-to-buy-this-bargain-rating-upgrade" target="_blank" rel="noopener">Seeking Alpha</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">Is Now a Good Time to Buy Microsoft?</div>
+                <div class="news-summary">올해 주가가 약 24% 하락한 상황에서 이를 위험 신호로 볼지 혹은 매수 기회로 볼지 분석함.</div>
+                <div class="news-reason">과거의 주가 하락이라는 부정적 사실과 향후 매수 적기라는 긍정적 전망이 균형을 이루고 있음.</div>
+                <div class="news-source"><a href="https://www.fool.com/investing/2026/04/09/is-now-a-good-time-to-buy-microsoft/" target="_blank" rel="noopener">The Motley Fool</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">Could Indivior (INDV) Turn Correctional Staffing Efficiencies Into a Durable Competitive Edge?</div>
+                <div class="news-summary">제약 회사인 Indivior(INDV)의 비용 효율성 및 경쟁 우위에 관한 분석 내용임.</div>
+                <div class="news-reason">마이크로소프트(MSFT)와 직접적인 관련이 없는 타 섹터 종목의 뉴스이므로 주가에 영향이 없음.</div>
+                <div class="news-source"><a href="https://simplywall.st/stocks/us/pharmaceuticals-biotech/nasdaq-indv/indivior-pharmaceuticals/news/could-indivior-indv-turn-correctional-staffing-efficiencies" target="_blank" rel="noopener">Simply Wall Street</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">Massive News: Microsoft Just Shifted Into Overdrive</div>
+                <div class="news-summary">모틀리 풀(The Motley Fool)의 추천 종목 10선에서 제외되었다는 소식이나, 제목은 마이크로소프트의 강력한 성장세를 암시함.</div>
+                <div class="news-reason">추천 목록 제외는 단기적으로 아쉬운 소식일 수 있으나, 기업의 성장 속도가 가속화되고 있다는 긍정적 뉘앙스가 공존함.</div>
+                <div class="news-source"><a href="https://www.aol.com/finance/massive-news-microsoft-just-shifted-135000865.html" target="_blank" rel="noopener">AOL.com</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">SK하이닉스</span>
+                </div>
+                <div class="news-headline">삼성전자·SK하이닉스 오르니 '소부장'도 주목, 메모리 슈퍼 사이클에 낙수효과 '톡톡'</div>
+                <div class="news-summary">삼성전자와 SK하이닉스의 주가 상승이 반도체 소부장 기업들로 확산되며 메모리 슈퍼 사이클에 대한 기대감이 커지고 있습니다.</div>
+                <div class="news-reason">메모리 업황의 슈퍼 사이클 진입 언급과 주가 상승세가 산업 전반으로 확산되는 긍정적인 신호를 담고 있습니다.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n12716" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">제품</span>
+                    <span class="badge badge-market-us">Apple</span>
+                </div>
+                <div class="news-headline">Stock Market Today, April 7: Apple Falls After Reports of Foldable iPhone Engineering Challenges</div>
+                <div class="news-summary">폴더블 아이폰 개발의 기술적 난항과 서비스 부문 성장 둔화 보고서가 발표된 후 애플 주가가 하락했습니다.</div>
+                <div class="news-reason">차세대 제품 출시 지연 가능성과 수익성이 높은 서비스 부문의 부진은 단기 실적 기대치를 낮추는 요인입니다.</div>
+                <div class="news-source"><a href="https://www.aol.com/finance/stock-market-today-april-7-213647545.html" target="_blank" rel="noopener">AOL.com</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Apple</span>
+                </div>
+                <div class="news-headline">Wedbush: What You Need to Know About the Latest ‘Victory’ for Apple Stock</div>
+                <div class="news-summary">웨드부시는 시장 변동성 속에서도 애플이 '매그니피센트 7' 종목 중 상대적으로 견고한 성과를 거두며 승리했다고 평가했습니다.</div>
+                <div class="news-reason">주요 투자 분석 기관의 긍정적인 전망은 투자 심리를 개선시키고 주가의 상대적 강세를 정당화합니다.</div>
+                <div class="news-source"><a href="https://www.barchart.com/story/news/1224388/wedbush-what-you-need-to-know-about-the-latest-victory-for-apple-stock" target="_blank" rel="noopener">Barchart.com</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">삼성전자</span>
+                </div>
+                <div class="news-headline">홍라희, 삼성전자 주식 3조원대 블록딜 매각…할인율 2.5%</div>
+                <div class="news-summary">홍라희 전 관장이 상속세 납부 및 대출금 상환을 위해 3조 원 규모의 삼성전자 지분을 블록딜로 매각했다.</div>
+                <div class="news-reason">대규모 블록딜은 통상 할인된 가격으로 거래되어 단기적인 주가 하락 압력으로 작용하며 시장에 물량 부담을 준다.</div>
+                <div class="news-source"><a href="https://news.einfomax.co.kr/news/articleView.html?idxno=4408511" target="_blank" rel="noopener">연합인포맥스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">NVIDIA</span>
+                </div>
+                <div class="news-headline">Which Generation Is the Most Bullish About AI Stocks? The Answer May Surprise You.</div>
+                <div class="news-summary">젊은 세대를 중심으로 AI 도구 사용과 AI 관련 주식에 대한 낙관적인 전망이 확산되고 있음을 시사함.</div>
+                <div class="news-reason">AI 산업 전반에 대한 긍정적인 대중적 심리는 AI 대장주인 엔비디아에 대한 장기적인 매수 수요로 이어질 수 있음.</div>
+                <div class="news-source"><a href="https://www.aol.com/articles/generation-most-bullish-ai-stocks-150500380.html" target="_blank" rel="noopener">AOL.com</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                17:40 수집
+                <span class="batch-count">16건</span>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">한화에어로스페이스</span>
+                </div>
+                <div class="news-headline">풍산 “탄약사업 매각 안해”···풍산·풍산홀딩스 주가 급락</div>
+                <div class="news-summary">풍산 측이 탄약 사업 매각 의사가 없음을 공식화하면서 한화에어로스페이스와의 인수 합병 가능성이 완전히 소멸됨.</div>
+                <div class="news-reason">인수 무산 소식이 이미 시장에 반영된 상태에서 확인된 사실이며, 한화에어로스페이스의 기존 사업 구조에는 직접적인 타격이 없음.</div>
+                <div class="news-source"><a href="http://www.s-d.kr/news/articleView.html?idxno=79476" target="_blank" rel="noopener">증권일보</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-kr">한화에어로스페이스</span>
+                </div>
+                <div class="news-headline">한화에어로스페이스, 단순 조달 넘어 ‘성장 확신’ 심었다…유상증자를 호재로 바꾼 비결</div>
+                <div class="news-summary">과거 대규모 유상증자를 단순 자금 조달이 아닌 성장 확신으로 승화시켜 시장의 신뢰를 확보한 경영 사례를 긍정적으로 평가함.</div>
+                <div class="news-reason">기업의 자금 조달 능력을 성장에 대한 자신감으로 해석하며 시장의 우려를 호재로 바꾼 경영 능력이 부각되어 투자 심리에 긍정적임.</div>
+                <div class="news-source"><a href="https://www.upkoreanews.kr/news/articleView.html?idxno=97947" target="_blank" rel="noopener">업코리아</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">매크로</span>
+                    <span class="badge badge-market-kr">신한지주</span>
+                </div>
+                <div class="news-headline">“배당은 확실한데”…전쟁 리스크 속 금융주, 투자 매력 전망은?</div>
+                <div class="news-summary">금리 인하 기대감 하락과 지정학적 리스크로 인해 금융주 투자심리가 위축되고 건전성 우려가 제기됨.</div>
+                <div class="news-reason">고금리 장기화에 따른 건전성 리스크와 대외 불확실성이 투자 매력을 저해하는 요인으로 작용함.</div>
+                <div class="news-source"><a href="https://www.mk.co.kr/news/economy/12013750" target="_blank" rel="noopener">매일경제</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">실적</span>
+                    <span class="badge badge-market-us">TSMC</span>
+                </div>
+                <div class="news-headline">Taiwan Semiconductor Is Setting Up For Another Beat (Preview) (NYSE:TSM)</div>
+                <div class="news-summary">AI 기반의 강력한 성장과 마진 회복력을 바탕으로 1분기 실적이 시장 예상치를 상회할 것으로 전망됩니다.</div>
+                <div class="news-reason">수익성 개선과 AI 수요 지속에 따른 '어닝 비트(Earnings Beat)' 기대감은 주가 상승의 촉매제가 됩니다.</div>
+                <div class="news-source"><a href="https://seekingalpha.com/article/4889158-taiwan-semiconductor-is-setting-up-for-another-beat-preview" target="_blank" rel="noopener">Seeking Alpha</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">실적</span>
+                    <span class="badge badge-market-us">TSMC</span>
+                </div>
+                <div class="news-headline">TSMC's 45% Jump in Revenue Signals the Early Stages of the AI Infrastructure S-Curve</div>
+                <div class="news-summary">3월 매출이 전년 대비 30.7% 증가하는 등 기록적인 실적을 달성하며 AI 인프라 성장의 초기 단계에 진입했음을 보여주었습니다.</div>
+                <div class="news-reason">AI 붐에 따른 역대급 매출 기록은 향후 장기적인 성장 곡선(S-Curve)의 시작으로 해석되어 투자 심리를 개선합니다.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605354557" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">실적</span>
+                    <span class="badge badge-market-us">TSMC</span>
+                </div>
+                <div class="news-headline">TSMC Q1 Revenue Surges 35% — Is TSM Stock Still a Buy Ahead of Earnings?</div>
+                <div class="news-summary">TSMC의 1분기 매출이 35% 급증했으며, 4월 16일 실적 발표를 앞두고 시장의 관심이 집중되고 있습니다.</div>
+                <div class="news-reason">실적 발표 전 공개된 강력한 매출 성장세는 기업의 펀더멘털이 매우 견고함을 시사하며 주가에 긍정적인 신호로 작용합니다.</div>
+                <div class="news-source"><a href="https://www.tipranks.com/news/tsmc-q1-revenue-surges-35-is-tsm-stock-still-a-buy-ahead-of-earnings" target="_blank" rel="noopener">TipRanks</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-kr">LG화학</span>
+                </div>
+                <div class="news-headline">현대차증권, 코스메카코리아 1분기 최대 실적 전망..."국내 고성장, 미국 숨 고르기"</div>
+                <div class="news-summary">코스메카코리아가 국내 시장의 고성장에 힘입어 1분기 사상 최대 실적을 기록할 것으로 전망됨.</div>
+                <div class="news-reason">화장품 OEM 기업에 관한 뉴스로, LG화학의 주가에 미치는 직접적인 영향이 없음.</div>
+                <div class="news-source"><a href="https://kdfnews.com/news/articleView.html?idxno=181576" target="_blank" rel="noopener">한국면세뉴스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">카카오</span>
+                </div>
+                <div class="news-headline">“배당은 확실한데”…전쟁 리스크 속 금융주, 투자 매력 전망은?</div>
+                <div class="news-summary">금리 인하 기대감 하락과 지정학적 리스크로 인해 고배당 매력이 있는 금융주조차 투자 심리가 흔들리고 있습니다.</div>
+                <div class="news-reason">금융주 섹터에 집중된 분석이며, 플랫폼 섹터인 카카오의 본업과는 직접적인 연관성이 낮습니다.</div>
+                <div class="news-source"><a href="https://www.mk.co.kr/news/economy/12013750" target="_blank" rel="noopener">매일경제</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">Jim Cramer Shows Positive Sentiment Toward Broadcom’s Google and Anthropic Deals</div>
+                <div class="news-summary">짐 크레이머가 브로드컴의 구글 및 앤스로픽과의 파트너십에 대해 긍정적인 전망을 내놓음.</div>
+                <div class="news-reason">주요 AI 기업들과의 협력 관계가 시장 전문가에 의해 긍정적으로 평가되면서 투자 심리에 호재로 작용함.</div>
+                <div class="news-source"><a href="https://www.insidermonkey.com/blog/jim-cramer-shows-positive-sentiment-toward-broadcoms-google-and-anthropic-deals-1735363/?amp=1" target="_blank" rel="noopener">Insider Monkey</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-kr">현대자동차</span>
+                </div>
+                <div class="news-headline">현대차증권 "에이피알 목표주가 상향, 1분기에 분기 최대 매출 경신한 듯"</div>
+                <div class="news-summary">현대차증권이 에이피알의 1분기 최대 매출 경신을 전망하며 목표 주가를 상향 조정했습니다.</div>
+                <div class="news-reason">현대자동차 기업 자체에 대한 소식이 아닌 계열사인 현대차증권의 분석 리포트이므로 본주 주가에 미치는 영향은 미미합니다.</div>
+                <div class="news-source"><a href="https://www.businesspost.co.kr/BP?command=article_view&num=435416" target="_blank" rel="noopener">비즈니스포스트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">삼성바이오로직스</span>
+                </div>
+                <div class="news-headline">중동 전쟁 속 숨 고른 제약바이오 업계…2분기 '반등' 주목</div>
+                <div class="news-summary">1분기 공급망 불안 등으로 주춤했던 제약바이오 업계가 2분기 실적 반등을 노리고 있습니다.</div>
+                <div class="news-reason">과거의 부정적 요인과 미래의 반등 기대감이 공존하고 있어 주가에 미치는 즉각적인 영향은 제한적일 것으로 보입니다.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n02820?mid=n1101" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">경영</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">‘Focus on the Trajectory,’ Says Top Investor About Microsoft Stock</div>
+                <div class="news-summary">막대한 자본 지출(Capex)에 대한 우려가 있으나, 전문가들은 단기적 비용보다 Microsoft의 장기적인 성장 궤적에 주목해야 한다고 조언합니다.</div>
+                <div class="news-reason">AI 투자를 위한 대규모 지출 우려를 불식시키고 장기적인 성장 가능성을 긍정적으로 평가하고 있습니다.</div>
+                <div class="news-source"><a href="https://www.tipranks.com/news/focus-on-the-trajectory-says-top-investor-about-microsoft-stock" target="_blank" rel="noopener">TipRanks</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">Microsoft’s Soaring AI Investments vs. $587 Price Target: Does the Recent Sell-Off Present a Buying Opportunity?</div>
+                <div class="news-summary">최근 Microsoft의 주가 하락에도 불구하고 월가 분석가들은 587달러의 목표 주가를 제시하며 낙관적인 전망을 유지하고 있습니다.</div>
+                <div class="news-reason">최근의 주가 하락을 매수 기회로 보고 있으며, 분석가들의 높은 목표 주가가 긍정적인 투자 심리를 자극할 수 있습니다.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605354524" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-us">Microsoft</span>
+                </div>
+                <div class="news-headline">How Rising Construction and Steel Demand Will Impact United States Lime & Minerals (USLM) Investors</div>
+                <div class="news-summary">미국 석회 및 광물(USLM)의 2025년 4분기 매출이 건설 및 철강 수요 증가로 인해 9.8% 상승했다는 보고서입니다.</div>
+                <div class="news-reason">해당 뉴스는 Microsoft가 아닌 USLM이라는 다른 기업에 대한 실적 정보이므로 Microsoft 주가에 직접적인 영향이 없습니다.</div>
+                <div class="news-source"><a href="https://simplywall.st/stocks/us/materials/nasdaq-uslm/united-states-lime-minerals/news/how-rising-construction-and-steel-demand-will-impact-united" target="_blank" rel="noopener">Simply Wall Street</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">SK하이닉스</span>
+                </div>
+                <div class="news-headline">[기업家] 삼성전자 ③ ㅣ AI·성과·주주환원…투자 확대 등 반등 모색</div>
+                <div class="news-summary">메모리 반도체 가격 상승세 둔화 우려로 인해 SK하이닉스 주가가 7.10% 급락하며 반도체주 전반이 약세를 보였습니다.</div>
+                <div class="news-reason">업황 둔화 우려라는 근본적인 부정적 요인과 함께 7% 이상의 큰 폭의 주가 하락이 발생했기 때문입니다.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260331n44806" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">매크로</span>
+                    <span class="badge badge-market-us">Apple</span>
+                </div>
+                <div class="news-headline">Jim Cramer’s 5 Stock Calls and the Impact of Iran War: Apple, Alphabet, and More</div>
+                <div class="news-summary">짐 크레이머가 이란 전쟁이 시장에 미치는 영향과 함께 애플을 포함한 주요 종목들에 대해 논평했습니다.</div>
+                <div class="news-reason">지정학적 리스크에 따른 시장 전반의 변동성을 다루고 있으며, 애플 자체의 펀더멘털 변화보다는 외부 환경에 초점이 맞춰져 있습니다.</div>
+                <div class="news-source"><a href="https://www.insidermonkey.com/blog/jim-cramers-5-stock-calls-and-the-impact-of-iran-war-apple-alphabet-and-more-1734437/5/" target="_blank" rel="noopener">Insider Monkey</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                18:33 수집
+                <span class="batch-count">3건</span>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">실적</span>
+                    <span class="badge badge-market-us">TSMC</span>
+                </div>
+                <div class="news-headline">TSMC's first-quarter revenue surges as AI interest propels sales beyond market forecasts</div>
+                <div class="news-summary">AI 수요 폭증으로 인해 TSMC의 1분기 매출이 시장 예상치를 상회하며 역대 최고 수준을 기록했습니다.</div>
+                <div class="news-reason">거시경제적 불확실성 속에서도 시장 전망치를 뛰어넘는 실적을 달성한 것은 기업의 펀더멘털이 매우 견고함을 시사합니다.</div>
+                <div class="news-source"><a href="https://telecom.economictimes.indiatimes.com/amp/news/devices/tsmcs-first-quarter-revenue-surges-as-ai-interest-propels-sales-beyond-market-forecasts/130163432" target="_blank" rel="noopener">ET Telecom</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">매크로</span>
+                    <span class="badge badge-market-us">Tesla</span>
+                </div>
+                <div class="news-headline">Q1 2026 Lithium Market: Prices Double Amid Supply Strain</div>
+                <div class="news-summary">공급망 압박과 전기차 수요 증가로 인해 리튬 가격이 95% 급등하며 시장 변동성이 커짐.</div>
+                <div class="news-reason">배터리 핵심 원자재인 리튬 가격의 급등은 테슬라의 생산 원가 부담을 가중시켜 수익성에 부정적일 수 있음.</div>
+                <div class="news-source"><a href="https://investingnews.com/daily/resource-investing/battery-metals-investing/lithium-investing/lithium-forecast/" target="_blank" rel="noopener">Investing News Network</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge badge-market-us">Apple</span>
+                </div>
+                <div class="news-headline">Investors are getting hyped over the SpaceX IPO. Here's what the market impact may be</div>
+                <div class="news-summary">SpaceX의 IPO 기대감이 시장에 미칠 영향에 대해 분석하며 일반적인 시장 데이터와 함께 언급됨.</div>
+                <div class="news-reason">뉴스 내용이 SpaceX에 집중되어 있으며 애플의 기업 가치나 주가에 직접적인 연관성이 거의 없음.</div>
+                <div class="news-source"><a href="https://www.cnbc.com/2026/04/08/investors-are-getting-hyped-over-the-spacex-ipo-heres-what-the-market-impact-may-be.html" target="_blank" rel="noopener">CNBC</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                21:12 수집
+                <span class="batch-count">12건</span>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">매크로</span>
+                    <span class="badge badge-market-us">AMD</span>
+                </div>
+                <div class="news-headline">Rosenblatt cuts Meta stock price target on Iran war impact</div>
+                <div class="news-summary">로젠블랫이 중동 전쟁 여파를 이유로 메타(Meta)의 목표 주가를 하향 조정함.</div>
+                <div class="news-reason">AMD가 아닌 타 종목(메타)에 관한 뉴스이며, 지정학적 리스크가 섹터 전반에 미치는 영향 외에 AMD 직접적인 연관성은 낮음.</div>
+                <div class="news-source"><a href="https://www.investing.com/news/analyst-ratings/rosenblatt-cuts-meta-stock-price-target-on-iran-war-impact-93CH-4605410" target="_blank" rel="noopener">Investing.com</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">실적</span>
+                    <span class="badge badge-market-us">TSMC</span>
+                </div>
+                <div class="news-headline">TSMC (NYSE: TSM) March revenue jumps 45% year over year</div>
+                <div class="news-summary">TSMC의 3월 매출이 전년 동월 대비 45% 급증하며 매우 강력한 성장세를 보였습니다.</div>
+                <div class="news-reason">월간 매출의 45% 성장은 반도체 업황의 강력한 회복과 TSMC의 시장 지배력을 보여주는 지표입니다.</div>
+                <div class="news-source"><a href="https://www.stocktitan.net/sec-filings/TSM/6-k-taiwan-semiconductor-manufacturing-co-ltd-current-report-foreign--ad634bdd2780.html" target="_blank" rel="noopener">Stock Titan</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">TSMC</span>
+                </div>
+                <div class="news-headline">TSMC Stock (TSM) Wins a New ‘Street-High’ Price Target Ahead of Earnings</div>
+                <div class="news-summary">Aletheia Capital이 실적 발표를 앞두고 TSMC에 대해 시장 최고 수준의 목표 주가를 제시했습니다.</div>
+                <div class="news-reason">전문 분석 기관의 목표 주가 상향은 향후 주가 상승에 대한 낙관적인 전망을 강화합니다.</div>
+                <div class="news-source"><a href="https://www.tipranks.com/news/tsmc-stock-tsm-wins-a-new-street-high-price-target-ahead-of-earnings" target="_blank" rel="noopener">TipRanks</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">실적</span>
+                    <span class="badge badge-market-us">TSMC</span>
+                </div>
+                <div class="news-headline">TSMC posts 35% jump in revenue to new record high as AI chip demand stays strong</div>
+                <div class="news-summary">TSMC의 1분기 매출이 AI 칩 수요에 힘입어 전년 대비 35% 증가한 1조 1,300억 대만 달러로 사상 최고치를 기록했습니다.</div>
+                <div class="news-reason">사상 최고 매출 기록과 강력한 AI 수요 확인은 기업의 성장성과 수익성을 입증하는 강력한 호재입니다.</div>
+                <div class="news-source"><a href="https://www.cnbc.com/2026/04/10/tsmc-q1-record-revenue-ai-chip-demand-strong.html" target="_blank" rel="noopener">CNBC</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">카카오</span>
+                </div>
+                <div class="news-headline">[특징주] NH투자증권, 역대급 실적 기대감에 상승</div>
+                <div class="news-summary">NH투자증권이 1분기 역대급 실적 기대감과 목표주가 상향 소식에 힘입어 상승세를 기록함.</div>
+                <div class="news-reason">특정 금융주(NH투자증권)의 개별 호재에 관한 뉴스이며 카카오의 사업이나 주가와는 직접적인 관련이 없음.</div>
+                <div class="news-source"><a href="https://m.news.nate.com/view/20260410n20341?mid=m02&list=recent&cpcd=" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Broadcom</span>
+                </div>
+                <div class="news-headline">Got $1,000? Here Are the Smartest Artificial Intelligence (AI) Stocks to Buy While the Market Is in Correction Mode.</div>
+                <div class="news-summary">시장 조정기에 매수하기 좋은 유망한 AI 관련주 중 하나로 브로드컴을 추천하고 있다.</div>
+                <div class="news-reason">AI 산업 내 브로드컴의 입지를 긍정적으로 평가하며, 현재의 시장 조정을 매수 기회로 제시하고 있다.</div>
+                <div class="news-source"><a href="https://www.fool.com/investing/2026/04/08/got-1000-here-are-the-smartest-artificial-intellig/" target="_blank" rel="noopener">The Motley Fool</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Alphabet</span>
+                </div>
+                <div class="news-headline">Mizuho raises Alphabet stock price target on cloud growth outlook By Investing.com</div>
+                <div class="news-summary">미즈호 증권이 클라우드 부문의 성장 전망을 근거로 알파벳의 목표 주가를 410달러에서 420달러로 상향 조정했습니다.</div>
+                <div class="news-reason">주요 투자은행의 목표 주가 상향은 기업의 미래 수익성에 대한 긍정적인 신뢰를 시장에 전달합니다.</div>
+                <div class="news-source"><a href="https://ca.investing.com/news/stock-market-news/mizuho-raises-alphabet-stock-price-target-on-cloud-growth-outlook-93CH-4558935" target="_blank" rel="noopener">Investing.com Canada</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">매크로</span>
+                    <span class="badge badge-market-kr">삼성바이오로직스</span>
+                </div>
+                <div class="news-headline">중동 전쟁에 인천기업 다수 주가 하락...HD건설기계는 12.4%↑</div>
+                <div class="news-summary">중동 전쟁 여파로 인한 유가 및 환율 급등으로 삼성바이오로직스를 포함한 인천 지역 주요 기업들의 주가가 하락세를 보였습니다.</div>
+                <div class="news-reason">지정학적 리스크로 인한 비용 상승과 거시경제 불안정성이 주가에 하방 압력으로 작용하고 있습니다.</div>
+                <div class="news-source"><a href="https://v.daum.net/v/zPlLjr9UDN" target="_blank" rel="noopener">Daum</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Tesla</span>
+                </div>
+                <div class="news-headline">TSLA Pre-Market Rally: Examining the Impact of Geopolitical Events on Market Flow</div>
+                <div class="news-summary">지정학적 사건과 위험 선호 심리의 영향으로 테슬라 주가가 장전 거래에서 4.43% 급등함.</div>
+                <div class="news-reason">장전 거래에서 4% 이상의 유의미한 상승을 기록하며 투자자들의 강한 매수세와 긍정적인 시장 흐름을 보여줌.</div>
+                <div class="news-source"><a href="https://www.bitget.com/amp/news/detail/12560605347893" target="_blank" rel="noopener">Bitget</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-kr">LG에너지솔루션</span>
+                </div>
+                <div class="news-headline">[1% 초고수의 선택] '미래에셋벤처투자' 사고 '삼성전자' 팔았다</div>
+                <div class="news-summary">수익률 상위 1% 고수 투자자들이 미래에셋벤처투자를 매수하고 삼성전자를 매도했다는 투자 동향임.</div>
+                <div class="news-reason">해당 뉴스는 타 종목에 대한 투자 동향을 다루고 있으며, LG에너지솔루션과의 직접적인 연관성이 없어 주가 영향이 미미함.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n27217?mid=n1101" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">시장</span>
+                    <span class="badge badge-market-us">Apple</span>
+                </div>
+                <div class="news-headline">Stocks making big moves yesterday: CrowdStrike, Avis Budget Group, Apple, Broadcom, and Tesla</div>
+                <div class="news-summary">애플이 전일 시장에서 큰 변동성을 보인 주요 종목 중 하나로 기록되었습니다.</div>
+                <div class="news-reason">단순히 과거의 주가 움직임을 요약한 정보로, 향후 주가 향방을 결정지을 새로운 재료를 포함하고 있지 않습니다.</div>
+                <div class="news-source"><a href="https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-yesterday-204547380.html" target="_blank" rel="noopener">Yahoo Finance</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">실적</span>
+                    <span class="badge badge-market-us">NVIDIA</span>
+                </div>
+                <div class="news-headline">Nvidia Stock Pressured Despite Strong Performance</div>
+                <div class="news-summary">4분기 매출이 전년 대비 73% 증가한 680억 달러로 기록적인 실적을 달성했음에도 불구하고 주가는 하락 압박을 받고 있음.</div>
+                <div class="news-reason">폭발적인 실적 성장에도 불구하고 주가가 압박을 받는 것은 시장의 기대치가 이미 반영되었거나 차익 실현 매물이 출회되고 있음을 시사함.</div>
+                <div class="news-source"><a href="https://intellectia.ai/news/stock/nvidia-stock-pressured-despite-strong-performance" target="_blank" rel="noopener">Intellectia AI</a></div>
+            </div>
+            
+        </div>
+        
+        
+
+        </div>
+
+        
+        
+        <div id="panel-topic" class="mode-panel">
+
+        
+        
+        <h2>주제별 감성 요약</h2>
+        <div style="overflow-x: auto;">
+        <table class="stock-table">
+            <thead>
+                <tr>
+                    <th>주제</th>
+                    <th>카테고리</th>
+                    <th>뉴스</th>
+                    <th>긍정</th>
+                    <th>부정</th>
+                    <th>중립</th>
+                    <th>감성점수</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>글로벌 경제</strong></td>
+                    <td>매크로</td>
+                    <td class="num">5</td>
+                    <td class="num">2</td>
+                    <td class="num">3</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-negative">-20.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>ESG/탄소중립</strong></td>
+                    <td>규제</td>
+                    <td class="num">5</td>
+                    <td class="num">3</td>
+                    <td class="num">1</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-positive">+40.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>AI/인공지능</strong></td>
+                    <td>산업</td>
+                    <td class="num">7</td>
+                    <td class="num">6</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-positive">+71.4</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>글로벌 리스크</strong></td>
+                    <td>지정학</td>
+                    <td class="num">7</td>
+                    <td class="num">0</td>
+                    <td class="num">6</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-negative">-85.7</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>글로벌 시장 동향</strong></td>
+                    <td>매크로</td>
+                    <td class="num">7</td>
+                    <td class="num">6</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-positive">+71.4</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>EV/2차전지</strong></td>
+                    <td>산업</td>
+                    <td class="num">5</td>
+                    <td class="num">5</td>
+                    <td class="num">0</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-positive">+100.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>금리/통화정책</strong></td>
+                    <td>매크로</td>
+                    <td class="num">3</td>
+                    <td class="num">2</td>
+                    <td class="num">1</td>
+                    <td class="num">0</td>
+                    <td class="num"><span class="score-positive">+33.3</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>반도체 산업</strong></td>
+                    <td>산업</td>
+                    <td class="num">5</td>
+                    <td class="num">4</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-positive">+80.0</span></td>
+                </tr>
+                
+                <tr>
+                    <td><strong>지정학 리스크</strong></td>
+                    <td>지정학</td>
+                    <td class="num">2</td>
+                    <td class="num">0</td>
+                    <td class="num">1</td>
+                    <td class="num">1</td>
+                    <td class="num"><span class="score-negative">-50.0</span></td>
+                </tr>
+                
+            </tbody>
+        </table>
+        </div>
+        
+
+        
+        
+        <h2>주제 뉴스 타임라인</h2>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                07:49 수집
+                <span class="batch-count">13건</span>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 리스크</span>
+                </div>
+                <div class="news-headline">(글로벌 GNA)안전과 품질 리스크를 줄이는 것이 조직의 경쟁력이다</div>
+                <div class="news-summary">현대 산업 환경에서 조직의 경쟁력을 높이기 위해 안전과 품질 리스크를 관리하는 위기관리 리더십의 중요성을 강조했다.</div>
+                <div class="news-reason">글로벌 차원의 돌발 리스크보다는 기업 내부의 운영 리스크 관리 원론을 다루고 있어 시장 전체에 미치는 영향은 제한적이다.</div>
+                <div class="news-source"><a href="https://www.globalnewsagency.kr/news/articleView.html?idxno=469815" target="_blank" rel="noopener">글로벌뉴스통신GNA</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 경제</span>
+                </div>
+                <div class="news-headline">[주요경제지표] 2026년 4월 9일자</div>
+                <div class="news-summary">이란의 호르무즈 해협 통과 제한 조치와 정치적 갈등으로 인한 지정학적 리스크가 부각됨.</div>
+                <div class="news-reason">핵심 해상 물류 경로인 호르무즈 해협의 통제는 글로벌 공급망 불안과 에너지 가격 상승을 초래하여 경제 전반에 악영향을 미침.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n00353?isq=11002&mid=n0308" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 시장 동향</span>
+                </div>
+                <div class="news-headline">'극적 휴전' 세계 증시 환호…두바이, 10년만 최고 상승률 '초강세' - 머니투데이</div>
+                <div class="news-summary">유럽과 두바이 등 주요국 증시가 휴전 소식에 환호하며 수년 만에 최대 상승률을 기록하는 초강세를 보였습니다.</div>
+                <div class="news-reason">글로벌 주요 시장이 동시다발적으로 급등하며 지정학적 리스크 해소에 따른 강력한 안도 랠리가 확인되었습니다.</div>
+                <div class="news-source"><a href="https://www.mt.co.kr/world/2026/04/08/2026040817290922535" target="_blank" rel="noopener">머니투데이뉴스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 시장 동향</span>
+                </div>
+                <div class="news-headline">IMF총재</div>
+                <div class="news-summary">IMF 총재는 전쟁으로 인한 공급망 차질과 에너지 가격 상승이 세계 경제 성장에 부정적 영향을 미칠 것이라고 경고했습니다.</div>
+                <div class="news-reason">글로벌 공급망 불안과 경제 성장률 전망 하향 가능성은 거시 경제 환경에 부정적인 요인으로 작용합니다.</div>
+                <div class="news-source"><a href="https://stock.mk.co.kr/news/view/1062269" target="_blank" rel="noopener">매일경제 마켓</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">ESG/탄소중립</span>
+                </div>
+                <div class="news-headline">Beyond Mitigation: What can Ongoing Emissions Responsibility fund?</div>
+                <div class="news-summary">탄소 감축을 넘어 배출 책임(Ongoing Emissions Responsibility)을 통한 기후 행동 자금 조달 방안에 대한 논의가 진행되고 있습니다.</div>
+                <div class="news-reason">탄소 배출에 대한 새로운 책임 모델과 자금 조달 방식의 제시는 기후 금융 시장의 패러다임을 확장하고 새로운 투자 기회를 창출할 수 있습니다.</div>
+                <div class="news-source"><a href="https://www.esgtoday.com/beyond-mitigation-what-can-ongoing-emissions-responsibility-fund/" target="_blank" rel="noopener">ESG Today</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">EV/2차전지</span>
+                </div>
+                <div class="news-headline">[프라임 딥톡] 전쟁이 키운 ESS 시장…"반도체 다음은 2차전지"</div>
+                <div class="news-summary">중동발 에너지 안보 위기로 인해 ESS 시장이 급성장하며, 전기차 수요 둔화로 주춤하던 2차전지 산업이 새로운 성장 동력을 확보함.</div>
+                <div class="news-reason">지정학적 위기가 에너지 저장 수요를 자극하여 2차전지 산업의 외연을 확장하고 미래 성장 가능성을 높이는 계기가 됨.</div>
+                <div class="news-source"><a href="https://news.dealsitetv.com/articles/168413" target="_blank" rel="noopener">DealSite경제TV</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">EV/2차전지</span>
+                </div>
+                <div class="news-headline">[강세 토픽] 2차전지 생산·판매 테마, 코칩 +3.72%, 삼성SDI +3.39% - 조선비즈</div>
+                <div class="news-summary">2차전지 생산 및 판매 테마가 전일 대비 2.44% 상승하며 시장에서 강세를 보이고 있으며, 코칩과 삼성SDI 등 주요 종목이 상승세를 주도함.</div>
+                <div class="news-reason">주요 기업들의 주가 상승과 테마 전반의 강세는 투자 심리 개선과 시장의 단기적 활력을 시사함.</div>
+                <div class="news-source"><a href="https://biz.chosun.com/stock/c-biz_bot/2026/04/09/GUYTSYJUGQ3DGMRZGNRDGNLGHA/" target="_blank" rel="noopener">Chosunbiz</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">지정학 리스크</span>
+                </div>
+                <div class="news-headline">중동 지정학 리스크 확대에 따른 산업 공급망 핵심 품목 영향 분석</div>
+                <div class="news-summary">한국무역협회는 중동 지역의 갈등 장기화와 호르무즈 해협 리스크가 산업 공급망 핵심 품목에 미치는 영향에 대한 분석 보고서를 발표했다.</div>
+                <div class="news-reason">중동의 지정학적 갈등이 장기화되면서 산업 전반의 핵심 품목 공급망에 대한 불확실성과 리스크가 고조되고 있음을 시사한다.</div>
+                <div class="news-source"><a href="https://eiec.kdi.re.kr/policy/domesticView.do?ac=0000204251" target="_blank" rel="noopener">KDI 경제교육·정보센터</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">금리/통화정책</span>
+                </div>
+                <div class="news-headline">금값 870만 원 시대 오나… "자산 불릴 마지막 구간일까" 2026년 금·은 랠리 전망</div>
+                <div class="news-summary">미국과 이란의 휴전 소식과 유가 하락으로 인해 금리 인하 기대감이 다시 커지며 금과 은 시장의 랠리가 전망됨.</div>
+                <div class="news-reason">지정학적 리스크 완화와 유가 하락은 인플레이션 압력을 낮추어 연준의 금리 인하 명분을 강화하는 요소임.</div>
+                <div class="news-source"><a href="http://m.g-enews.com/article/GlobalBiz/2026/04/202604091401491950fbbec65dfb_1" target="_blank" rel="noopener">글로벌이코노믹</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">반도체 산업</span>
+                </div>
+                <div class="news-headline">1분기 메모리 매출 75조에 40만 전자 전망까지…한때 HBM 시장 후발주자 평가받던 삼성의 ‘화려한’ 귀환</div>
+                <div class="news-summary">삼성전자가 1분기 역대 최대 실적을 기록하며 HBM 시장에서의 경쟁력을 회복하고 메모리 매출 성장을 견인함.</div>
+                <div class="news-reason">시장 우려를 불식시킨 삼성전자의 화려한 귀환은 메모리 반도체 생태계 전반의 활력을 불어넣고 투자 심리를 개선함.</div>
+                <div class="news-source"><a href="https://www.thepublic.kr/news/articleView.html?idxno=300529" target="_blank" rel="noopener">더퍼블릭</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">반도체 산업</span>
+                </div>
+                <div class="news-headline">"올해 D램 캐파 4분의 1은 HBM"…메모리 생산구조 전환 속도</div>
+                <div class="news-summary">메모리 시장이 범용 D램에서 HBM 중심으로 빠르게 재편되며, 올해 HBM 캐파 비중이 25%에 달할 것으로 전망됨.</div>
+                <div class="news-reason">고부가가치 제품인 HBM으로의 생산 구조 전환은 메모리 반도체 기업들의 수익성 개선과 산업 전반의 질적 성장을 의미함.</div>
+                <div class="news-source"><a href="https://www.newsis.com/view/NISX20260409_0003585092" target="_blank" rel="noopener">뉴시스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">AI/인공지능</span>
+                </div>
+                <div class="news-headline">NH투자증권 “아크릴, GPU 인프라 최적화 ‘유일’…AI 인프라 투자 직접 수혜”</div>
+                <div class="news-summary">NH투자증권은 GPU 인프라 최적화 기술을 보유한 기업이 정부의 AI 인프라 확대 정책의 직접적인 수혜를 입을 것으로 전망함.</div>
+                <div class="news-reason">AI 모델 구동을 위한 하드웨어 효율화 기술의 중요성이 부각되며, 인프라 최적화 시장의 성장 가능성을 보여줌.</div>
+                <div class="news-source"><a href="https://www.etoday.co.kr/news/view/2574515" target="_blank" rel="noopener">이투데이</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 5/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">AI/인공지능</span>
+                </div>
+                <div class="news-headline">아마존 CEO "2천억불 AI투자, 직감 따른것 아냐…일생유일 기회"</div>
+                <div class="news-summary">아마존 CEO 앤디 재시는 2천억 달러 규모의 AI 인프라 투자가 일생일대의 기회라며 대규모 투자 계획을 옹호함.</div>
+                <div class="news-reason">글로벌 빅테크 기업의 천문학적인 자본 지출은 AI 산업 전반의 수요 확산과 인프라 성장에 대한 강력한 확신을 시사함.</div>
+                <div class="news-source"><a href="https://www.tfmedia.co.kr/news/article.html?no=203575" target="_blank" rel="noopener">조세금융신문</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                09:52 수집
+                <span class="batch-count">4건</span>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 리스크</span>
+                </div>
+                <div class="news-headline">[이준호의 N잡러칼럼] 시너지경영(39), 중동전쟁 시대, 내수에서 살아남아라!</div>
+                <div class="news-summary">2026년 중동 지역의 군사적 긴장 고조로 글로벌 경제 불확실성이 극대화됨에 따라 기업과 개인의 생존 전략이 강조되고 있습니다.</div>
+                <div class="news-reason">이란-미국-이스라엘 간의 전쟁 위기는 글로벌 공급망과 에너지 가격에 직접적인 타격을 주어 경제적 불안정성을 심화시킵니다.</div>
+                <div class="news-source"><a href="https://www.kmaeil.com/news/articleView.html?idxno=635725" target="_blank" rel="noopener">경인매일</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 경제</span>
+                </div>
+                <div class="news-headline">‘국가대표 AI’ LG 엑사원 4.5..글로벌 석권 비결 학계 협업</div>
+                <div class="news-summary">LG의 AI 모델 '엑사원 4.5'가 글로벌 벤치마크에서 오픈AI와 구글을 앞서며 한국 AI 기술의 경쟁력을 입증함.</div>
+                <div class="news-reason">글로벌 기술 경쟁에서 국내 기업의 우위 확보는 향후 기술 자립도 향상 및 관련 산업 성장에 긍정적인 영향을 미침.</div>
+                <div class="news-source"><a href="https://www.00news.co.kr/news/articleView.html?idxno=103135" target="_blank" rel="noopener">공공뉴스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 시장 동향</span>
+                </div>
+                <div class="news-headline">[0410개장체크] 美 증시, 이스라엘-레바논 휴전 추진 소식에 상승세… 나스닥 0.83%↑</div>
+                <div class="news-summary">이스라엘과 레바논의 휴전 추진 소식으로 불확실성이 해소되며 나스닥을 포함한 미국 주요 증시가 상승 마감했습니다.</div>
+                <div class="news-reason">중동 지역의 긴장 완화가 기술주 중심의 매수세를 유입시키며 시장에 긍정적인 동력을 제공했습니다.</div>
+                <div class="news-source"><a href="https://www.infostockdaily.co.kr/news/articleView.html?idxno=215252" target="_blank" rel="noopener">인포스탁데일리</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">규제</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">ESG/탄소중립</span>
+                </div>
+                <div class="news-headline">[현장TALK] “이제 탄소는 비용이다…기술 투자와 검증 체계가 관건”</div>
+                <div class="news-summary">글로벌 탄소 규제가 통상 및 공시 전반으로 확대됨에 따라 국내 기업들의 기술 투자와 검증 체계 구축 부담이 가중되고 있다.</div>
+                <div class="news-reason">탄소가 비용으로 인식되기 시작하면서 기업들에게 추가적인 비용 발생과 규제 대응이라는 경영상의 부담을 주고 있다.</div>
+                <div class="news-source"><a href="https://www.weeklyseoul.net/news/articleView.html?idxno=85616" target="_blank" rel="noopener">위클리서울</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                14:10 수집
+                <span class="batch-count">14건</span>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 리스크</span>
+                </div>
+                <div class="news-headline">기후위기, 환경 넘어 경제 리스크로...보험 역할 확대 시급</div>
+                <div class="news-summary">기상이변에 따른 기후위기가 환경 문제를 넘어 기존 보험 체계로 감당하기 어려운 수준의 거대한 경제적 리스크로 부상하고 있다.</div>
+                <div class="news-reason">자연재해의 일상화는 자산 가치 손실과 보험 산업의 건전성 악화를 초래하여 금융 및 실물 경제 전반에 장기적인 위협이 된다.</div>
+                <div class="news-source"><a href="https://theggnews.com/ko-kr/articles/26190" target="_blank" rel="noopener">더글로벌기빙뉴스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 리스크</span>
+                </div>
+                <div class="news-headline">코리안리, 호르무즈 해협 위기 속 국내 보험시장 안전망 역할 강화</div>
+                <div class="news-summary">코리안리재보험이 호르무즈 해협의 지정학적 리스크 속에서도 경쟁력 있는 요율을 제공하며 국내 보험 계약자 보호와 시장 안정화에 기여하고 있다.</div>
+                <div class="news-reason">특정 기업의 대응력과는 별개로, 호르무즈 해협의 위기 상황 자체가 글로벌 물류 및 에너지 안보에 지속적인 하방 압력으로 작용한다.</div>
+                <div class="news-source"><a href="https://www.globalepic.co.kr/view.php?ud=2026041009534497707cc35ccc5c_29" target="_blank" rel="noopener">글로벌에픽</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 리스크</span>
+                </div>
+                <div class="news-headline">코리안리, 호르무즈 위기 속 '보이지 않는 방패'로 부상</div>
+                <div class="news-summary">중동 정세 불안으로 글로벌 해상보험 시장이 위축되는 가운데, 코리안리재보험이 국내 보험 시장의 안전판 역할을 수행하며 대응력을 높이고 있다.</div>
+                <div class="news-reason">지정학적 위기로 인한 보험 시장의 변동성 확대는 금융 비용 상승과 글로벌 교역의 불확실성을 초래하는 부정적 요인이다.</div>
+                <div class="news-source"><a href="https://www.ebn.co.kr/news/articleView.html?idxno=1705011" target="_blank" rel="noopener">www.ebn.co.kr</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 리스크</span>
+                </div>
+                <div class="news-headline">“중동 리스크 속 안전경영 강화”…대한해운, LNG선 현장 점검 확대</div>
+                <div class="news-summary">대한해운과 KLCSM 경영진이 중동 지역의 긴장 고조에 대응하여 LNG 운반선의 해상 리스크 관리와 현장 안전 점검을 강화하고 있다.</div>
+                <div class="news-reason">중동 지역의 지정학적 불안으로 인해 해상 물류의 안전성이 위협받고 운영 비용 및 리스크 관리 부담이 증가하고 있다.</div>
+                <div class="news-source"><a href="http://www.haesanews.com/news/articleView.html?idxno=147000" target="_blank" rel="noopener">해사신문</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 경제</span>
+                </div>
+                <div class="news-headline">한양증권, 리테일 경쟁력 강화...주요 지표 개선</div>
+                <div class="news-summary">한양증권이 리테일 조직 강화와 디지털 전환을 통해 개인연금 계좌 수 등 주요 지표에서 큰 성장을 기록함.</div>
+                <div class="news-reason">개별 금융사의 실적 개선은 금융 서비스 산업의 활력을 보여주며, 리테일 투자 시장의 확장 가능성을 시사함.</div>
+                <div class="news-source"><a href="https://v.daum.net/v/20260408190900807" target="_blank" rel="noopener">Daum</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 경제</span>
+                </div>
+                <div class="news-headline">[김상철의 경제포커스]돈 풀린 韓…정책은 막혔다</div>
+                <div class="news-summary">한국의 통화량은 풍부하나 가계부채 비중이 높아 금리 인상이 어렵고 정책적 유연성이 부족한 상황을 지적함.</div>
+                <div class="news-reason">유동성 규모 대비 구조적 한계와 가계부채 부담으로 인한 통화 정책의 경직성은 거시 경제의 불확실성을 높이는 요인임.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n13144" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">EV/2차전지</span>
+                </div>
+                <div class="news-headline">[강세 토픽] 2차전지 공정장비 테마, 엠플러스 +6.33%, 한빛레이저 +6.26% - 조선비즈</div>
+                <div class="news-summary">엠플러스와 한빛레이저 등 공정장비 기업들의 주가 상승으로 2차전지 공정장비 테마가 전반적인 강세를 기록함.</div>
+                <div class="news-reason">장비주들의 상승은 향후 배터리 제조사들의 설비 투자 재개나 공정 효율화에 대한 시장의 기대를 반영함.</div>
+                <div class="news-source"><a href="https://biz.chosun.com/stock/c-biz_bot/2026/04/10/GA2TIZBTGE2TKYRRMNSTQYJYGA/" target="_blank" rel="noopener">Chosunbiz</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">EV/2차전지</span>
+                </div>
+                <div class="news-headline">[강세 토픽] 2차전지 부품 테마, 아이티엠반도체 +18.41%, 상아프론테크 +5.19% - 조선비즈</div>
+                <div class="news-summary">2차전지 부품 테마가 아이티엠반도체와 상아프론테크 등의 급등에 힘입어 전일 대비 2.43% 상승하며 강세를 보임.</div>
+                <div class="news-reason">부품 관련 종목들의 동반 상승은 해당 섹터에 대한 투자 심리가 개선되고 있음을 시사함.</div>
+                <div class="news-source"><a href="https://biz.chosun.com/stock/c-biz_bot/2026/04/10/MM2WIMBWGMZTAYJQGNRTKYRWMU/" target="_blank" rel="noopener">Chosunbiz</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">지정학 리스크</span>
+                </div>
+                <div class="news-headline">K드론 SWOT 들여다보니…소프트웨어는 자립 가능, 그러나…</div>
+                <div class="news-summary">러시아-우크라이나 전쟁 이후 드론이 핵심 무기로 부상하며 민간 물류 및 보안 시장으로 확산되고 있으나, 하드웨어 자립 등 과제가 남아 있다.</div>
+                <div class="news-reason">지정학적 위기가 드론 산업의 성장을 견인하고 있으나, 기술적 자립도와 시장 경쟁력 측면에서 기회와 위협이 공존한다.</div>
+                <div class="news-source"><a href="https://mkbn.mk.co.kr/news/economy/12013454" target="_blank" rel="noopener">mkbn.mk.co.kr</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">금리/통화정책</span>
+                </div>
+                <div class="news-headline">[뉴스프레소] 미국-이란 휴전 합의에 국제유가 급락… 다우 1년래 최대 랠리 - 머니투데이</div>
+                <div class="news-summary">미국과 이란의 휴전 합의로 국제유가가 폭락하고 다우지수가 급등하며 시장의 전면전 공포가 해소되었습니다.</div>
+                <div class="news-reason">지정학적 리스크 완화와 유가 하락은 인플레이션 압력을 낮추어 연준의 통화 정책 운용에 긍정적인 환경을 조성합니다.</div>
+                <div class="news-source"><a href="https://www.mt.co.kr/amp/world/2026/04/10/2026040910397017645" target="_blank" rel="noopener">머니투데이뉴스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">반도체 산업</span>
+                </div>
+                <div class="news-headline">SK하이닉스, “이익4배↑기대”…4월, “글로벌 고객사에 SSD 'PQC21' 공급 시작” 중장기 전망은?</div>
+                <div class="news-summary">SK하이닉스가 1분기 영업이익의 대폭적인 성장이 기대되는 가운데, 4월부터 글로벌 고객사에 차세대 SSD 공급을 시작하며 실적 개선세를 이어갈 전망입니다.</div>
+                <div class="news-reason">주요 기업의 실적 턴어라운드와 고부가가치 신제품 공급은 메모리 반도체 업황의 강력한 회복 신호로 해석됩니다.</div>
+                <div class="news-source"><a href="http://www.newsworker.co.kr/news/articleViewAmp.html?idxno=421359" target="_blank" rel="noopener">뉴스워커</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">반도체 산업</span>
+                </div>
+                <div class="news-headline">HBM 고적층 중요성 확대…반도체 장비업계도 '차세대 본딩' 선점 경쟁</div>
+                <div class="news-summary">AI 수요 확대로 HBM 고적층 기술의 중요성이 커지면서 반도체 장비 업계의 차세대 본딩 기술 선점 경쟁이 심화되고 있습니다.</div>
+                <div class="news-reason">HBM 성능 고도화를 위한 장비 기술 경쟁은 반도체 후공정 생태계 전반의 기술적 진보와 시장 성장을 시사합니다.</div>
+                <div class="news-source"><a href="https://mobile.newsis.com/view_amp.html?ar_id=NISX20260410_0003585727" target="_blank" rel="noopener">뉴시스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">AI/인공지능</span>
+                </div>
+                <div class="news-headline">IR협의회, 사업보고서 ‘AI 분석’ 도입…투자 정보 해석 구조 변화</div>
+                <div class="news-summary">IR협의회의 AI 분석 도입으로 방대한 공시 자료 해석 방식이 효율화되며 투자 정보 제공 구조에 변화가 일어나고 있다.</div>
+                <div class="news-reason">금융권 내 AI 기술 도입이 실질적인 서비스 혁신으로 이어지며 AI 산업의 활용 범위를 증명하고 있다.</div>
+                <div class="news-source"><a href="https://www.e-science.co.kr/news/articleView.html?idxno=129109" target="_blank" rel="noopener">이코노미사이언스</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">AI/인공지능</span>
+                </div>
+                <div class="news-headline">IR협의회, AI로 사업보고서 분석···'기업분석보고서' 발간</div>
+                <div class="news-summary">한국IR협의회가 상장사 사업보고서를 AI로 분석하여 투자자들에게 핵심 정보를 제공하는 기업분석보고서를 발간했다.</div>
+                <div class="news-reason">AI를 활용한 데이터 분석이 자본시장의 정보 비대칭성을 해소하고 투자 편의성을 높이는 긍정적인 사례로 평가된다.</div>
+                <div class="news-source"><a href="https://www.seoulfn.com/news/articleView.html?idxno=626175" target="_blank" rel="noopener">서울파이낸스</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                17:45 수집
+                <span class="batch-count">12건</span>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 리스크</span>
+                </div>
+                <div class="news-headline">에너지 위기 속 ‘전환 vs 회귀’ 전망 교차… IEA “동시 추진 불가피”</div>
+                <div class="news-summary">지정학적 리스크와 공급 불안으로 글로벌 에너지 시장이 요동치고 있으며, 에너지 안보와 재생에너지 전환을 동시에 추진해야 하는 복합 위기에 직면했다.</div>
+                <div class="news-reason">중동 전쟁 등 지정학적 갈등이 에너지 공급망의 불안정성을 초래하고 글로벌 에너지 가격 변동성을 심화시키고 있다.</div>
+                <div class="news-source"><a href="https://www.solartodaymag.com/news/articleView.html?idxno=20624" target="_blank" rel="noopener">솔라투데이</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 시장 동향</span>
+                </div>
+                <div class="news-headline">[증시 레이더] 미국-이란 협상 기대에 코스피 반등⋯5,858선 회복</div>
+                <div class="news-summary">미국과 이란의 협상 기대감이 반영되며 코스피가 1.40% 반등해 5,858선을 회복하는 등 국내 증시가 회복세를 보였습니다.</div>
+                <div class="news-reason">대외 불확실성 감소로 인해 위축되었던 투자 심리가 회복되면서 국내 증시의 주요 지수들이 반등에 성공하며 긍정적인 흐름을 보이고 있습니다.</div>
+                <div class="news-source"><a href="https://www.foeconomy.co.kr/news/view.php?no=7978" target="_blank" rel="noopener">포커스온경제</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 시장 동향</span>
+                </div>
+                <div class="news-headline">하락 출발 뉴욕증시, 휴전 지속 안도감에 상승 마감(종합)</div>
+                <div class="news-summary">뉴욕증시는 미국과 이란의 휴전 지속에 따른 안도감으로 상승 마감했으며, S&P 500 지수는 7거래일 연속 상승세를 이어갔습니다.</div>
+                <div class="news-reason">글로벌 증시의 벤치마크인 뉴욕증시가 지정학적 안정을 바탕으로 장기 상승 랠리를 기록하며 시장의 하방 경직성을 확보하고 상승 동력을 유지하고 있습니다.</div>
+                <div class="news-source"><a href="https://www.koreancenter.or.kr/news/articleView.html?idxno=1337366" target="_blank" rel="noopener">연합뉴스 한민족센터</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 시장 동향</span>
+                </div>
+                <div class="news-headline">중동 휴전 기대감에 상승…닛케이 1.84%↑[Asia마감]</div>
+                <div class="news-summary">레바논 휴전 협상 등 중동 지역의 긴장 완화 기대감으로 인해 닛케이 지수를 포함한 아시아 주요 증시가 동반 상승 마감했습니다.</div>
+                <div class="news-reason">지정학적 불안 요소의 해소 기대감이 아시아 시장 전반에 확산되며 위험 자산에 대한 선호 현상을 강화하고 있습니다.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n24914" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 시장 동향</span>
+                </div>
+                <div class="news-headline">“美월가가 주목하는 韓 시장…규제가 곧 기회”</div>
+                <div class="news-summary">미국 월가 금융사들이 한국의 규제 환경을 새로운 기회로 인식하며 로빈후드, 써클 등 주요 핀테크 기업들의 한국 시장 진출 가능성이 타진되고 있습니다.</div>
+                <div class="news-reason">글로벌 금융 자본의 한국 시장에 대한 높은 관심과 진출 의지는 국내 자본 시장의 유동성 공급 및 글로벌 위상 제고에 긍정적인 신호로 해석됩니다.</div>
+                <div class="news-source"><a href="https://stock.mk.co.kr/news/view/1062789" target="_blank" rel="noopener">매일경제 마켓</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 1/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">ESG/탄소중립</span>
+                </div>
+                <div class="news-headline">신한은행, 골드·실버 투자 콘텐츠 이용 고객 대상 은화 증정 이벤트 진행 外</div>
+                <div class="news-summary">신한은행이 귀금속 투자 콘텐츠 이용 고객을 대상으로 은화 증정 이벤트를 진행함</div>
+                <div class="news-reason">해당 뉴스는 귀금속 투자 마케팅에 관한 것으로 ESG 규제나 탄소중립 정책과는 직접적인 관련성이 낮음</div>
+                <div class="news-source"><a href="http://www.greened.kr/news/articleView.html?idxno=339140" target="_blank" rel="noopener">녹색경제신문</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 2/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">ESG/탄소중립</span>
+                </div>
+                <div class="news-headline">[ESG+사회공헌-농협은행] "농심(農心) 담은 금융"...농업 기반 ESG 경영 고도화</div>
+                <div class="news-summary">NH농협은행이 농업과 지역사회를 연계한 녹색·사회금융을 확대하며 ESG 경영 고도화에 주력하고 있음</div>
+                <div class="news-reason">금융권의 녹색 금융 공급 확대는 ESG 관련 산업의 자금 조달 환경을 개선하고 시장 생태계를 활성화함</div>
+                <div class="news-source"><a href="http://www.paxetv.com/news/articleView.html?idxno=269210" target="_blank" rel="noopener">팍스경제TV</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">EV/2차전지</span>
+                </div>
+                <div class="news-headline">포스코홀딩스, 아르헨 리튬 염호 추가 확보…전기차 7000만 대분 ‘잭팟’</div>
+                <div class="news-summary">포스코홀딩스가 아르헨티나에서 전기차 7000만 대 분량의 리튬 염호 광권을 추가 확보하며 글로벌 공급망 지배력을 강화했다.</div>
+                <div class="news-reason">배터리 핵심 원료인 리튬의 대규모 확보는 산업 전반의 공급망 안정성과 장기적 경쟁력을 크게 높이는 요소다.</div>
+                <div class="news-source"><a href="https://www.jabon.co.kr/news/articleView.html?idxno=2635" target="_blank" rel="noopener">https://www.jabon.co.kr/</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">금리/통화정책</span>
+                </div>
+                <div class="news-headline">미국의 인플레이션이 2.8%로 지속되는 상황에서 연준은 2026년에 금리를 인하할 가능성이 낮다.</div>
+                <div class="news-summary">미국 인플레이션이 2.8%로 지속되고 GDP 성장률이 하향 조정되면서 2026년까지도 금리 인하 가능성이 낮다는 전망이 제기됨.</div>
+                <div class="news-reason">끈질긴 물가 상승과 성장 둔화가 겹치는 스태그플레이션 위험으로 인해 고금리 기조가 장기화될 가능성을 시사함.</div>
+                <div class="news-source"><a href="https://www.vietnam.vn/ko/lam-phat-my-dai-dang-o-muc-2-8-fed-kho-ha-lai-suat-trong-nam-2026" target="_blank" rel="noopener">Vietnam.vn</a></div>
+            </div>
+            
+            <div class="news-item sentiment-neutral">
+                <div class="news-badges">
+                    <span class="badge badge-neutral">중립</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">반도체 산업</span>
+                </div>
+                <div class="news-headline">메모리 초호황, 中에도 기회…韓반도체 초격차 시험대</div>
+                <div class="news-summary">중국이 범용 D램을 넘어 HBM 시장까지 진출하며 한국 반도체의 초격차 지위를 위협하고 있어 기술 경쟁이 더욱 치열해질 전망이다.</div>
+                <div class="news-reason">시장 전체 규모는 커지고 있으나, 중국의 추격으로 인한 공급 과잉 우려와 시장 점유율 방어 비용 증가라는 리스크가 공존한다.</div>
+                <div class="news-source"><a href="https://m.dailian.co.kr/amp/news/view/1631680/%EB%A9%94%EB%AA%A8%EB%A6%AC-%EC%B4%88%ED%98%B8%ED%99%A9-%E4%B8%AD%EC%97%90%EB%8F%84-%EA%B8%B0%ED%9A%8C%E9%9F%93%EB%B0%98%EB%8F%84%EC%B2%B4-%EC%B4%88-2026" target="_blank" rel="noopener">데일리안</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">AI/인공지능</span>
+                </div>
+                <div class="news-headline">‘내달 출시’ 국민참여형 성장펀드 밑그림 나왔다…첨단산업에 60% 투자</div>
+                <div class="news-summary">정부가 조성하는 국민참여형 성장펀드가 AI를 포함한 첨단산업 분야에 자산의 60%를 집중 투자하기로 결정했습니다.</div>
+                <div class="news-reason">정부 주도의 대규모 자금 유입과 정책적 지원은 국내 AI 산업 생태계의 자금 조달 환경을 개선하고 기술 개발을 가속화합니다.</div>
+                <div class="news-source"><a href="https://www.etoday.co.kr/news/view/2574705" target="_blank" rel="noopener">이투데이</a></div>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">AI/인공지능</span>
+                </div>
+                <div class="news-headline">“AI가 무능해야 내 밥그릇 지킨다”... Z세대 44% "회사 AI 전략 고의로 방해했다"</div>
+                <div class="news-summary">Z세대 직원의 약 44%가 일자리 상실 우려로 인해 회사의 AI 도입 및 전략을 고의로 방해하고 있다는 조사 결과가 발표되었습니다.</div>
+                <div class="news-reason">기업 내부 구성원들의 심리적 저항과 고의적 방해는 AI 기술의 실질적인 도입 속도와 생산성 향상을 저해하는 리스크 요인으로 작용합니다.</div>
+                <div class="news-source"><a href="https://contents.premium.naver.com/aipostkorea/aipost/contents/260409203640198cg" target="_blank" rel="noopener">네이버 프리미엄콘텐츠</a></div>
+            </div>
+            
+        </div>
+        
+        <div class="batch-group">
+            <div class="batch-header">
+                18:38 수집
+                <span class="batch-count">3건</span>
+            </div>
+            
+            <div class="news-item sentiment-negative">
+                <div class="news-badges">
+                    <span class="badge badge-negative">부정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">글로벌 경제</span>
+                </div>
+                <div class="news-headline">美 경제지표 악화에도 비트코인 상승세…7만3000달러 기대감↑</div>
+                <div class="news-summary">미국의 물가 상승과 성장 둔화라는 스태그플레이션 우려에도 불구하고 비트코인 등 자산 가격은 상승세를 보임.</div>
+                <div class="news-reason">가상자산 가격 상승과는 별개로, 글로벌 경제의 핵심인 미국 경제 지표가 물가 상승과 성장 둔화를 동시에 가리키는 것은 거시경제적 악재임.</div>
+                <div class="news-source"><a href="https://news.nate.com/view/20260410n09392" target="_blank" rel="noopener">네이트</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 3/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">ESG/탄소중립</span>
+                </div>
+                <div class="news-headline">친환경 항만 - 베트남 해양 산업의 필연적인 방향.</div>
+                <div class="news-summary">베트남 해양 산업이 '녹색항 2026' 워크숍을 통해 친환경 항만 구축을 필연적인 발전 방향으로 설정하고 정책적 논의를 시작했다.</div>
+                <div class="news-reason">신흥국의 물류 인프라가 친환경 체제로 전환되는 것은 글로벌 공급망 전반의 탄소중립 달성에 기여하며 관련 기술 수요를 창출한다.</div>
+                <div class="news-source"><a href="https://www.vietnam.vn/ko/cang-xanh-huong-di-tat-yeu-cua-nganh-hang-hai-viet-nam" target="_blank" rel="noopener">Vietnam.vn</a></div>
+            </div>
+            
+            <div class="news-item sentiment-positive">
+                <div class="news-badges">
+                    <span class="badge badge-positive">긍정</span>
+                    <span class="badge badge-impact">영향도 4/5</span>
+                    <span class="badge badge-category">기타</span>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">AI/인공지능</span>
+                </div>
+                <div class="news-headline">메타, AI클라우드 제공 코어위브에 210억불 추가 투자</div>
+                <div class="news-summary">메타가 AI 인프라 수요 대응을 위해 AI 클라우드 전문 기업 코어위브에 210억 달러 규모의 대규모 투자를 단행했다.</div>
+                <div class="news-reason">빅테크의 막대한 자본 투입은 AI 인프라 시장의 지속적인 성장을 보장하며 관련 하드웨어 및 클라우드 산업에 강력한 성장 동력을 제공한다.</div>
+                <div class="news-source"><a href="https://www.junggi.co.kr/news/articleView.html?idxno=36094" target="_blank" rel="noopener">중기이코노미</a></div>
+            </div>
+            
+        </div>
+        
+        
+
+        </div>
+        
+
+        <footer>
+            <a href="/MarketPulse-site/news/">뉴스 대시보드</a>
+            <a href="/MarketPulse-site/news/explore.html">뉴스 탐색</a>
+            <a href="/MarketPulse-site/">브리핑 아카이브</a>
+        </footer>
+    </div>
+    
+    <script>
+    function switchMode(mode) {
+        document.querySelectorAll('.mode-tab').forEach(function(t) {
+            var isTarget = (mode === 'topic') ? t.textContent.indexOf('주제') >= 0 : t.textContent.indexOf('종목') >= 0;
+            t.classList.toggle('active', isTarget);
+        });
+        document.querySelectorAll('.mode-panel').forEach(function(p) { p.classList.remove('active'); });
+        document.getElementById('panel-' + mode).classList.add('active');
+        history.replaceState(null, '', mode === 'topic' ? '#topic' : location.pathname);
+    }
+    if (location.hash === '#topic') {
+        switchMode('topic');
+    }
+    </script>
+    
+</body>
+</html>
